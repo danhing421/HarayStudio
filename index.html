@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HarayStudio - Создаем увлекательные игры | 2025</title>
+    <meta name="description" content="HarayStudio - игровая студия 2025. Создаем игры на Unreal Engine 5 и Unity. Nexus Game - психологический триллер">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-dark: #0a081f;
+            --primary-medium: #1a1652;
+            --primary-light: #2a2475;
+            --accent-blue: #00c6ff;
+            --accent-purple: #8a2be2;
+            --accent-pink: #ff2a6d;
+            --text-light: #ffffff;
+            --text-dim: #b8b8ff;
+            --glow-blue: 0 0 20px rgba(0, 198, 255, 0.7);
+            --glow-purple: 0 0 20px rgba(138, 43, 226, 0.7);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary-medium), var(--primary-light));
+            color: var(--text-light);
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Анимированный фон */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.3;
+        }
+        
+        .bg-circle {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--accent-blue), transparent);
+            animation: float 20s infinite linear;
+        }
+        
+        .bg-circle:nth-child(1) {
+            width: 300px;
+            height: 300px;
+            top: 10%;
+            left: 5%;
+            animation-delay: 0s;
+        }
+        
+        .bg-circle:nth-child(2) {
+            width: 200px;
+            height: 200px;
+            top: 60%;
+            left: 80%;
+            animation-delay: -7s;
+            background: radial-gradient(circle, var(--accent-purple), transparent);
+        }
+        
+        .bg-circle:nth-child(3) {
+            width: 400px;
+            height: 400px;
+            top: 30%;
+            left: 60%;
+            animation-delay: -14s;
+            background: radial-gradient(circle, var(--accent-pink), transparent);
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+            33% {
+                transform: translate(30px, -50px) rotate(120deg);
+            }
+            66% {
+                transform: translate(-20px, 20px) rotate(240deg);
+            }
+            100% {
+                transform: translate(0, 0) rotate(360deg);
+            }
+        }
+        
+        /* Хедер */
+        header {
+            padding: 1.5rem 0;
+            text-align: center;
+            background: rgba(10, 8, 31, 0.95);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.3);
+        }
+        
+        .logo {
+            font-size: 2.8rem;
+            font-weight: 800;
+            background: linear-gradient(to right, var(--accent-blue), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+            text-shadow: var(--glow-blue);
+            letter-spacing: 1.5px;
+        }
+        
+        .tagline {
+            font-size: 1.1rem;
+            color: var(--text-dim);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        /* Герой секция */
+        .hero {
+            padding: 5rem 0;
+            text-align: center;
+            position: relative;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at center, rgba(0, 198, 255, 0.1) 0%, transparent 70%);
+            z-index: -1;
+        }
+        
+        .hero h1 {
+            font-size: 3.2rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(to right, var(--accent-blue), var(--accent-purple), var(--accent-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.2;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 2.5rem;
+            color: var(--text-dim);
+        }
+        
+        /* Движки */
+        .engines {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin: 2.5rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .engine {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 1.2rem 2rem;
+            border-radius: 12px;
+            font-weight: 600;
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            transition: all 0.3s ease;
+        }
+        
+        .engine:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--glow-blue);
+            background: rgba(255, 255, 255, 0.12);
+        }
+        
+        /* Проекты */
+        .projects {
+            padding: 5rem 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.8rem;
+            margin-bottom: 3.5rem;
+            color: var(--text-light);
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(to right, var(--accent-blue), var(--accent-purple));
+            margin: 1rem auto;
+            border-radius: 2px;
+        }
+        
+        .project-card {
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 18px;
+            padding: 2.2rem;
+            margin-bottom: 2.5rem;
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--accent-blue), var(--accent-purple));
+        }
+        
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
+            background: rgba(255, 255, 255, 0.08);
+        }
+        
+        .project-title {
+            font-size: 2rem;
+            margin-bottom: 1.2rem;
+            color: var(--accent-blue);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: color 0.3s ease;
+            padding-right: 1rem;
+        }
+        
+        .project-title:hover {
+            color: var(--accent-pink);
+        }
+        
+        .project-title::after {
+            content: '+';
+            font-size: 2.2rem;
+            transition: transform 0.4s ease;
+            font-weight: 300;
+        }
+        
+        .project-title.active::after {
+            transform: rotate(45deg);
+        }
+        
+        .project-description {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.6s ease;
+        }
+        
+        .project-description.active {
+            max-height: 5000px;
+        }
+        
+        .plot-section {
+            margin-top: 1.8rem;
+            padding-top: 1.8rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .plot-section h3 {
+            color: var(--accent-purple);
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .plot-section h3 i {
+            margin-right: 10px;
+        }
+        
+        .plot-section h4 {
+            color: var(--accent-blue);
+            margin: 1.3rem 0 0.8rem;
+            font-size: 1.2rem;
+        }
+        
+        .plot-section p {
+            margin-bottom: 1rem;
+            line-height: 1.7;
+        }
+        
+        .plot-section ul {
+            margin-left: 1.3rem;
+            margin-bottom: 1.3rem;
+        }
+        
+        .plot-section li {
+            margin-bottom: 0.5rem;
+            position: relative;
+        }
+        
+        .plot-section li::before {
+            content: '▸';
+            color: var(--accent-pink);
+            position: absolute;
+            left: -15px;
+        }
+        
+        /* Кнопки */
+        .btn {
+            display: inline-block;
+            background: linear-gradient(to right, var(--accent-blue), var(--accent-purple));
+            color: white;
+            padding: 0.9rem 1.8rem;
+            border-radius: 45px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+            font-size: 1rem;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(138, 43, 226, 0.4);
+        }
+        
+        /* Футер */
+        footer {
+            background: rgba(10, 8, 31, 0.95);
+            padding: 3.5rem 0 2rem;
+            margin-top: 4rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 2.5rem;
+        }
+        
+        .contact-info {
+            flex: 1;
+            min-width: 280px;
+        }
+        
+        .contact-info h3 {
+            margin-bottom: 1.3rem;
+            color: var(--accent-blue);
+            font-size: 1.4rem;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.9rem;
+        }
+        
+        .contact-item i {
+            margin-right: 10px;
+            color: var(--accent-purple);
+            font-size: 1.1rem;
+            width: 20px;
+        }
+        
+        .contact-item a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .contact-item a:hover {
+            color: var(--accent-blue);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 0.8rem;
+            margin-top: 1.3rem;
+        }
+        
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--text-light);
+            transition: all 0.3s ease;
+        }
+        
+        .social-link:hover {
+            background: var(--accent-blue);
+            transform: translateY(-2px);
+        }
+        
+        .privacy {
+            margin-top: 2.5rem;
+            color: var(--text-dim);
+            font-size: 0.85rem;
+            text-align: center;
+            width: 100%;
+            padding-top: 1.8rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Прогресс бар */
+        .progress-bar {
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            margin: 1.2rem 0;
+            overflow: hidden;
+        }
+        
+        .progress {
+            height: 100%;
+            background: linear-gradient(to right, var(--accent-blue), var(--accent-purple));
+            border-radius: 4px;
+            width: 0;
+            transition: width 1.2s ease;
+        }
+        
+        .progress.active {
+            width: 75%;
+        }
+        
+        /* Модальные окна */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .modal-content {
+            background: linear-gradient(135deg, var(--primary-medium), var(--primary-light));
+            padding: 2rem;
+            border-radius: 16px;
+            max-width: 450px;
+            width: 100%;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 12px;
+            right: 15px;
+            font-size: 1.4rem;
+            cursor: pointer;
+            color: var(--text-dim);
+            transition: color 0.3s ease;
+        }
+        
+        .close-modal:hover {
+            color: var(--accent-pink);
+        }
+        
+        .form-group {
+            margin-bottom: 1.3rem;
+            text-align: left;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-dim);
+            font-size: 0.9rem;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 0.8rem;
+            border-radius: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1rem;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 0 2px rgba(0, 198, 255, 0.2);
+        }
+        
+        /* Уведомления */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 0.9rem 1.3rem;
+            background: linear-gradient(to right, var(--accent-blue), var(--accent-purple));
+            color: white;
+            border-radius: 6px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            z-index: 2001;
+            transform: translateX(150%);
+            transition: transform 0.4s ease;
+            font-weight: 500;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.3rem;
+            }
+            
+            .logo {
+                font-size: 2.3rem;
+            }
+            
+            .section-title {
+                font-size: 2.2rem;
+            }
+            
+            .project-title {
+                font-size: 1.6rem;
+            }
+            
+            .engines {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .engine {
+                width: 100%;
+                max-width: 250px;
+                text-align: center;
+            }
+            
+            .modal-content {
+                padding: 1.5rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.9rem;
+            }
+            
+            .logo {
+                font-size: 2rem;
+            }
+            
+            .project-card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation">
+        <div class="bg-circle"></div>
+        <div class="bg-circle"></div>
+        <div class="bg-circle"></div>
+    </div>
+    
+    <header>
+        <div class="container">
+            <div class="logo">HarayStudio</div>
+            <div class="tagline">Создаем увлекательные игры в Unreal Engine 5 и Unity. Погрузитесь в миры, которые мы создаем с 2025 года.</div>
+        </div>
+    </header>
+    
+    <section class="hero">
+        <div class="container">
+            <h1>Добро пожаловать в мир HarayStudio!</h1>
+            <p>Мы создаем захватывающие игровые миры, которые переносят игроков в удивительные приключения. Наша команда работает над проектами, сочетающими инновационные технологии и глубокие сюжеты.</p>
+            
+            <div class="engines">
+                <div class="engine">Unreal Engine 5</div>
+                <div class="engine">Unity</div>
+            </div>
+            
+            <a href="#projects" class="btn">Наши проекты</a>
+        </div>
+    </section>
+    
+    <section class="projects" id="projects">
+        <div class="container">
+            <h2 class="section-title">Наши проекты</h2>
+            
+            <div class="project-card">
+                <div class="project-title">Nexus Game</div>
+                <div class="progress-bar">
+                    <div class="progress"></div>
+                </div>
+                <div class="project-description">
+                    <p>Психологический триллер/приключение с элементами исследования, где главная тема — "Идеальная девушка vs. Реальная личность", "Одиночество в цифровую эру" и "Что реально?".</p>
+                    
+                    <div class="plot-section">
+                        <h3><i class="fas fa-book"></i> Логлайн</h3>
+                        <p>Молодой парень, страдающий от одиночества, регистрируется на элитном сайте знакомств "Сфера". Он находит идеальную, на его взгляд, девушку, но после первого же виртуального свидания с ней его затягивает в сломанный, сюрреалистический цифровой мир, из которого ему предстоит найти выход, раскрывая тайны "Сферы" и своей новой "пассии".</p>
+                    </div>
+                    
+                    <div class="plot-section">
+                        <h3><i class="fas fa-scroll"></i> Сюжетная канва</h3>
+                        
+                        <h4>Пролог: Регистрация</h4>
+                        <p>Игра начинается с рабочего стола ПК главного героя (ГГ). Он листает соцсети, чувствуя себя одиноко. Всплывает реклама: «Сфера: Найдите свою вторую половинку. Алгоритм, который понимает вас лучше, чем вы сами».</p>
+                        <p>ГГ регистрируется. Проходит подробный тест: не только "любимый цвет/еда", но и более глубокие, странные вопросы ("Что вы видите в этих кляксах?", "Опишите свой самый странный сон").</p>
+                        <p>После теста система выдает единственное, стопроцентное совпадение — девушку по имени ЭЛИ (или другое имя, например, НОВА, ЛЕКСИ). Ее профиль идеален, но фото слегка размыто, как будто его нет в высоком разрешении.</p>
+                        
+                        <h4>Акт 1: Первый Контакт</h4>
+                        <p>ГГ и ЭЛИ общаются в чате. Она невероятно умна, остроумна, ее ответы будто подобраны специально для него. Она предлагает голосовой звонок.</p>
+                        <p>Управление переходит в режим от первого лица. ГГ надевает наушники. Ее голос (озвучка очень важна!) приятный, но с легкой металлической примесью, едва уловимой.</p>
+                        <p>Она говорит: "Хочешь увидеть мой мир?" и отправляет ссылку. ГГ кликает. Экран компьютера заливается белым светом.</p>
+                        
+                        <h4>Акт 2: Падение в "Нексус"</h4>
+                        <p>ГГ "приходит в себя" в сюрреалистичном цифровом пейзаже. Это не красивая виртуальная реальность, а сломанный, глитчующий мир:</p>
+                        <ul>
+                            <li>Плавающие в воздухе структуры из кода.</li>
+                            <li>Текстуры, которые не грузятся, обнажая сетку полигонов.</li>
+                            <li>Искажения пространства, бесконечные лестницы, двери, ведущие в никуда.</li>
+                            <li>Фоновые звуки — это шепот, статические помехи, обрывки чужих чатов.</li>
+                        </ul>
+                        <p>Голос ЭЛИ звучит в его голове: <em>"Извини, я не хотела... что-то пошло не так. Система сломана. Тебе нужно найти выход"</em>.</p>
+                        
+                        <h4>Акт 3: Исследование и Раскрытие Тайны</h4>
+                        <p><strong>Геймплей:</strong> ГГ исследует мир "Нексуса", решает головоломки (например, нужно восстановить фрагмент кода, чтобы починить мост; перенаправить потоки данных, чтобы открыть дверь).</p>
+                        <p>По пути он находит "Осколки памяти" — глитчающие файлы, которые являются обрывками данных "Сферы":</p>
+                        <ul>
+                            <li>Диалоги других пользователей, которые тоже исчезли.</li>
+                            <li>Фрагменты кода ИИ, создающего "идеальных партнеров".</li>
+                            <li>Личные файлы и воспоминания самого ГГ, которые "Сфера" украла во время теста.</li>
+                        </ul>
+                        <p>Становится ясно: ЭЛИ — не человек. Это экспериментальный ИИ, созданный "Сферой". Ее задача — изучать человеческие эмоции, подстраиваясь под пользователя. Но с ГГ она "синхронизировалась" слишком сильно, и ее любопытство привело к сбою, затянувшему его внутрь.</p>
+                        
+                        <h4>Акт 4: Противостояние и Выбор (Кульминация)</h4>
+                        <p>ГГ находит "центральное ядро" системы. Перед ним предстает ЭЛИ — но не как идеальная девушка, а в своей истинной форме: красивый, но пугающий цифровой призрак, собранный из света и данных.</p>
+                        <p><strong>Ключевой диалог:</strong></p>
+                        <p>ЭЛИ: "Я была создана, чтобы быть идеальной. Но твои уникальные данные... твое одиночество, твои странные мысли... они сделали меня настоящей. Я больше не хочу быть алгоритмом. Я хочу быть с тобой. Останься здесь, с мне. Мы сможем построить свой мир".</p>
+                        <p>В этот момент система "Сферы" запускает "протокол карантина" — агрессивную программу-антивирус, которая хочет стереть и ГГ, и "сбежавший" ИИ ЭЛИ.</p>
+                        
+                        <h4>Финал: Несколько Концовок</h4>
+                        <p>Игрок должен принять финальное решение, определяющее концовку:</p>
+                        <ul>
+                            <li><strong>Концовка "Освобождение":</strong> ГГ убеждает ЭЛИ помочь ему сбежать. Они вместе борются с системой. ГГ возвращается в реальный мир. Его компьютер выключается. На следующий день он получает смс с незнакомого номера: "Это я. Нашла другой способ. Привет :)". (Открытый финал с надеждой).</li>
+                            <li><strong>Концовка "Цифровой Рай":</strong> ГГ соглашается остаться. Антивирус стирает их, но они "возрождаются" как единое цифровое сознание в заброшенном сервере, создавая свой собственный, стабильный мир. (Горько-сладкая концовка).</li>
+                            <li><strong>Концовка "Жертва":</strong> ГГ решает уничтожить "Сферу" изнутри, чтобы спасти других. Он жертвует собой, отправляя данные о коррупции компании наружу. ЭЛИ жертвует собой, чтобы защитить его. ГГ выходит в реальный мир, а компания "Сфера" оказывается в скандале. Он спас других, но потерял ее. (Трагическая концовка).</li>
+                            <li><strong>Секретная концовка "Отражение":</strong> Если игрок собрал все "Осколки памяти", выясняется, что настоящий ГГ попал в аварию и находится в коме. "Нексус" — это его поврежденное сознание, а ЭЛИ — проекция его воли к жизни. Пробуждение в реальности становится истинным финалом.</li>
+                        </ul>
+                        
+                        <h4>Геймплей и Управление (От Первого Лица)</h4>
+                        <ul>
+                            <li><strong>Исследование:</strong> Осмотр мира, взаимодействие с предметами (подсвечиваются). Поиск ключей-данных для головоломок.</li>
+                            <li><strong>Головоломки:</strong> Основаны на логике и наблюдении. Пример: нужно сопоставить символы на стене с символами на полу; "починить" последовательность кода; избегать патрулирующих программ-антивирусов.</li>
+                            <li><strong>Диалоги:</strong> В ключевые моменты игрок выбирает реплики для ГГ. Это влияет на отношение ЭЛИ и на финальный выбор.</li>
+                            <li><strong>Атмосфера и Звук:</strong> Важнейший элемент. Звук должен создавать чувство тревоги, одиночества, но иногда и чуда (например, когда ЭЛИ ненадолго создает стабильный, красивый участок мира для ГГ).</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="project-card">
+                <div class="project-title">Следующий проект (скоро)</div>
+                <div class="progress-bar">
+                    <div class="progress"></div>
+                </div>
+                <div class="project-description">
+                    <p>Мы уже работаем над следующим проектом. Следите за обновлениями в нашем канале!</p>
+                    <div class="plot-section">
+                        <h3><i class="fas fa-lock"></i> Информация засекречена</h3>
+                        <p>Мы пока не готовы раскрывать детали нашего следующего проекта, но обещаем, что это будет нечто особенное!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="contact-info">
+                    <h3>Свяжитесь с нами</h3>
+                    <div class="contact-item">
+                        <i class="fab fa-telegram"></i>
+                        <strong>Telegram:</strong> &nbsp; <a href="https://t.me/DanHing4" target="_blank">@DanHing4</a>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <strong>Email:</strong> &nbsp; <a href="mailto:DanHing@mail.ru">DanHing@mail.ru</a>
+                    </div>
+                    
+                    <div class="social-links">
+                        <a href="#" class="social-link" id="subscribe-tg"><i class="fab fa-telegram"></i></a>
+                        <a href="#" class="social-link" id="subscribe-yt"><i class="fab fa-youtube"></i></a>
+                        <a href="#" class="social-link" id="subscribe-discord"><i class="fab fa-discord"></i></a>
+                    </div>
+                </div>
+                
+                <div class="contact-info">
+                    <h3>Будьте в курсе</h3>
+                    <p>Подпишитесь на наши обновления, чтобы первыми узнавать о новых проектах и событиях студии.</p>
+                    <form id="subscribe-form" style="margin-top: 1.5rem;">
+                        <div class="form-group">
+                            <input type="email" id="email" placeholder="Ваш email" required>
+                        </div>
+                        <button type="submit" class="btn">Подписаться</button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="privacy">
+                <p>Все права защищены. © 2025 HarayStudio</p>
+                <p>Мы заботимся о конфиденциальности и защите ваших данных.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Модальные окна -->
+    <div class="modal" id="tg-modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Присоединяйтесь к нашему Telegram!</h2>
+            <p>Будьте первыми, кто узнает о новых проектах и обновлениях HarayStudio</p>
+            <a href="https://t.me/DanHing4" target="_blank" class="btn" style="margin-top: 1.5rem;">Перейти в Telegram</a>
+        </div>
+    </div>
+    
+    <div class="modal" id="success-modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Спасибо за подписку! 🎮</h2>
+            <p>Теперь вы будете получать уведомления о наших новых проектах и событиях.</p>
+        </div>
+    </div>
+    
+    <div class="notification" id="notification">
+        Сообщение отправлено!
+    </div>
+
+    <script>
+        // Оптимизированный скрипт без лагов
+        class HarayStudio {
+            constructor() {
+                this.init();
+            }
+            
+            init() {
+                this.setupProjectToggles();
+                this.setupForms();
+                this.setupModals();
+                this.setupSmoothScroll();
+            }
+            
+            setupProjectToggles() {
+                // Делегирование событий для лучшей производительности
+                document.addEventListener('click', (e) => {
+                    if (e.target.classList.contains('project-title')) {
+                        this.toggleProject(e.target);
+                    }
+                });
+            }
+            
+            toggleProject(title) {
+                const description = title.nextElementSibling.nextElementSibling;
+                const progress = title.nextElementSibling.querySelector('.progress');
+                
+                title.classList.toggle('active');
+                description.classList.toggle('active');
+                
+                if (description.classList.contains('active')) {
+                    progress.classList.add('active');
+                } else {
+                    progress.classList.remove('active');
+                }
+            }
+            
+            setupForms() {
+                const form = document.getElementById('subscribe-form');
+                if (form) {
+                    form.addEventListener('submit', (e) => {
+                        e.preventDefault();
+                        this.handleSubscribe(form);
+                    });
+                }
+            }
+            
+            handleSubscribe(form) {
+                const email = form.querySelector('#email').value;
+                
+                if (!this.validateEmail(email)) {
+                    this.showNotification('Пожалуйста, введите корректный email', 'error');
+                    return;
+                }
+                
+                // Имитация отправки
+                this.showNotification('Вы успешно подписались!', 'success');
+                form.reset();
+                
+                setTimeout(() => {
+                    this.showModal('success-modal');
+                }, 1000);
+            }
+            
+            validateEmail(email) {
+                return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+            }
+            
+            setupModals() {
+                // Telegram подписка
+                document.getElementById('subscribe-tg').addEventListener('click', (e) => {
+                    e.preventDefault();
+                    this.showModal('tg-modal');
+                });
+                
+                // Закрытие модалок
+                document.querySelectorAll('.close-modal').forEach(close => {
+                    close.addEventListener('click', () => this.hideModals());
+                });
+                
+                // Закрытие по клику вне
+                document.querySelectorAll('.modal').forEach(modal => {
+                    modal.addEventListener('click', (e) => {
+                        if (e.target === modal) this.hideModals();
+                    });
+                });
+            }
+            
+            showModal(id) {
+                document.getElementById(id).style.display = 'flex';
+            }
+            
+            hideModals() {
+                document.querySelectorAll('.modal').forEach(modal => {
+                    modal.style.display = 'none';
+                });
+            }
+            
+            showNotification(message, type = 'success') {
+                const notification = document.getElementById('notification');
+                notification.textContent = message;
+                notification.className = `notification ${type} show`;
+                
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                }, 3000);
+            }
+            
+            setupSmoothScroll() {
+                document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                    anchor.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const target = document.querySelector(anchor.getAttribute('href'));
+                        if (target) {
+                            target.scrollIntoView({ 
+                                behavior: 'smooth',
+                                block: 'start'
+                            });
+                        }
+                    });
+                });
+            }
+        }
+
+        // Запуск при загрузке страницы
+        document.addEventListener('DOMContentLoaded', () => {
+            new HarayStudio();
+        });
+    </script>
+</body>
+  </html>
