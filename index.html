@@ -10,7 +10,7 @@
         :root {
             --primary-dark: #0a0520; --primary-medium: #1a1258; --primary-light: #2a1d80;
             --accent-blue: #00e5ff; --accent-purple: #9d4edd; --accent-pink: #ff2a9d;
-            --text-light: #ffffff; --text-dim: #c8c8ff;
+            --accent-cyan: #00ffea; --text-light: #ffffff; --text-dim: #c8c8ff;
             --gradient-main: linear-gradient(135deg, var(--accent-blue), var(--accent-purple), var(--accent-pink));
         }
         
@@ -22,27 +22,53 @@
         body { 
             background: linear-gradient(135deg, var(--primary-dark), var(--primary-medium), var(--primary-light)); 
             color: var(--text-light); min-height: 100vh; overflow-x: hidden;
-            /* Отключаем рендеринг за пределами вьюпорта */
-            contain: layout style paint;
         }
         
-        /* 🎯 ОПТИМИЗИРОВАННЫЙ ФОН - без сложных анимаций */
-        .optimized-bg {
+        /* 🎯 ОПТИМИЗИРОВАННЫЕ АНИМАЦИИ ФОНА */
+        .animated-bg {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             z-index: -1;
-            background: 
-                radial-gradient(circle at 20% 80%, rgba(157, 78, 221, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(0, 229, 255, 0.1) 0%, transparent 50%);
-            /* Отключаем сложные фильтры */
+            overflow: hidden;
+        }
+        
+        .gradient-orbit {
+            position: absolute;
+            width: 80vw;
+            height: 80vw;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--accent-purple) 0%, transparent 70%);
+            opacity: 0.1;
+            animation: orbit-1 25s linear infinite;
+            top: -30vw;
+            left: -20vw;
             will-change: transform;
         }
         
-        /* Простые статические частицы */
-        .static-particles {
+        .gradient-orbit-2 {
+            width: 60vw;
+            height: 60vw;
+            background: radial-gradient(circle, var(--accent-blue) 0%, transparent 70%);
+            animation: orbit-2 20s linear infinite reverse;
+            top: 50%;
+            right: -20vw;
+            opacity: 0.08;
+        }
+        
+        @keyframes orbit-1 {
+            0% { transform: rotate(0deg) translateX(10vw) rotate(0deg); }
+            100% { transform: rotate(360deg) translateX(10vw) rotate(-360deg); }
+        }
+        
+        @keyframes orbit-2 {
+            0% { transform: rotate(0deg) translateY(5vw) rotate(0deg); }
+            100% { transform: rotate(360deg) translateY(5vw) rotate(-360deg); }
+        }
+        
+        .floating-particles {
             position: fixed;
             top: 0;
             left: 0;
@@ -52,176 +78,477 @@
             pointer-events: none;
         }
         
-        .static-particle {
+        .floating-particle {
             position: absolute;
             border-radius: 50%;
-            background: var(--accent-blue);
-            opacity: 0.1;
-            animation: simple-twinkle 8s ease-in-out infinite;
+            background: var(--accent-cyan);
+            opacity: 0;
+            animation: float-in 1s ease-out forwards, gentle-float 20s ease-in-out infinite;
+            will-change: transform, opacity;
         }
         
-        @keyframes simple-twinkle {
-            0%, 100% { opacity: 0.05; transform: scale(1); }
-            50% { opacity: 0.15; transform: scale(1.1); }
+        @keyframes float-in {
+            to { opacity: 0.15; }
+        }
+        
+        @keyframes gentle-float {
+            0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+            25% { transform: translate3d(20px, -30px, 0) scale(1.1); }
+            50% { transform: translate3d(-15px, 10px, 0) scale(0.9); }
+            75% { transform: translate3d(10px, 20px, 0) scale(1.05); }
         }
         
         .container { 
             max-width: 1200px; 
             margin: 0 auto; 
             padding: 0 20px;
-            /* Оптимизация контейнера */
-            contain: layout style;
         }
         
-        /* 🌟 Хедер - без blur для производительности */
+        /* 🌟 Хедер с анимированным градиентом */
         header { 
-            padding: 1rem 0; 
+            padding: 1.2rem 0; 
             text-align: center; 
-            background: rgba(10, 5, 32, 0.95);
+            background: rgba(10, 5, 32, 0.9);
             position: sticky; 
             top: 0; 
             z-index: 1000; 
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-            /* Отключаем сложные эффекты */
-            backdrop-filter: none;
+            border-bottom: 1px solid transparent;
+            background: linear-gradient(135deg, 
+                rgba(10, 5, 32, 0.95) 0%, 
+                rgba(26, 18, 88, 0.9) 50%, 
+                rgba(42, 29, 128, 0.85) 100%);
+            backdrop-filter: blur(10px);
+            animation: header-glow 4s ease-in-out infinite alternate;
+        }
+        
+        @keyframes header-glow {
+            0% { border-bottom-color: rgba(0, 229, 255, 0.3); }
+            100% { border-bottom-color: rgba(157, 78, 221, 0.5); }
         }
         
         .logo { 
-            font-size: 2.5rem; 
-            font-weight: 800; 
+            font-size: 3rem; 
+            font-weight: 900; 
             background: var(--gradient-main); 
             -webkit-background-clip: text; 
             -webkit-text-fill-color: transparent;
-            margin-bottom: 0.3rem;
+            margin-bottom: 0.5rem;
+            animation: logo-shimmer 3s ease-in-out infinite;
+            display: inline-block;
+        }
+        
+        @keyframes logo-shimmer {
+            0%, 100% { 
+                filter: drop-shadow(0 0 10px rgba(0, 229, 255, 0.5));
+                transform: scale(1);
+            }
+            50% { 
+                filter: drop-shadow(0 0 20px rgba(157, 78, 221, 0.7));
+                transform: scale(1.02);
+            }
         }
         
         .tagline { 
-            font-size: 1rem; 
+            font-size: 1.1rem; 
             color: var(--text-dim); 
             max-width: 600px; 
             margin: 0 auto;
+            animation: text-fade 6s ease-in-out infinite;
         }
         
-        /* 🚀 Герой секция - упрощенная */
+        @keyframes text-fade {
+            0%, 100% { opacity: 0.8; }
+            50% { opacity: 1; }
+        }
+        
+        /* 🚀 Герой секция с параллаксом */
         .hero { 
-            padding: 4rem 0; 
+            padding: 6rem 0; 
             text-align: center; 
             position: relative;
-            /* Отключаем сложные фоны */
-            background: none;
+            overflow: hidden;
         }
         
         .hero-content { 
             position: relative; 
             z-index: 2;
+            animation: hero-entrance 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        
+        @keyframes hero-entrance {
+            from { 
+                opacity: 0; 
+                transform: translateY(50px) scale(0.95); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0) scale(1); 
+            }
         }
         
         .hero h1 {
-            font-size: 2.5rem; 
+            font-size: 3.5rem; 
             margin-bottom: 1.5rem; 
             background: var(--gradient-main);
             -webkit-background-clip: text; 
             -webkit-text-fill-color: transparent;
-            line-height: 1.2;
+            line-height: 1.1;
+            animation: title-float 6s ease-in-out infinite;
+            position: relative;
+        }
+        
+        .hero h1::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 25%;
+            width: 50%;
+            height: 3px;
+            background: var(--gradient-main);
+            border-radius: 2px;
+            animation: underline-pulse 3s ease-in-out infinite;
+        }
+        
+        @keyframes title-float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        @keyframes underline-pulse {
+            0%, 100% { 
+                transform: scaleX(0.8);
+                opacity: 0.7;
+            }
+            50% { 
+                transform: scaleX(1);
+                opacity: 1;
+            }
         }
         
         .hero p { 
-            font-size: 1.1rem; 
+            font-size: 1.3rem; 
             max-width: 800px; 
-            margin: 0 auto 2rem; 
+            margin: 0 auto 3rem; 
             color: var(--text-dim); 
             line-height: 1.6;
+            animation: fade-in-up 1s ease-out 0.3s both;
         }
         
-        /* 🎮 Движки - упрощенные */
+        @keyframes fade-in-up {
+            from { 
+                opacity: 0; 
+                transform: translateY(30px); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            }
+        }
+        
+        /* 🎮 Анимированные движки */
         .engines { 
             display: flex; 
             justify-content: center; 
-            gap: 1rem; 
-            margin: 2rem 0; 
+            gap: 1.5rem; 
+            margin: 3rem 0; 
             flex-wrap: wrap;
         }
         
         .engine {
             background: rgba(255, 255, 255, 0.1); 
-            padding: 1rem 1.5rem; 
-            border-radius: 15px;
-            font-weight: 600; 
+            padding: 1.5rem 2.5rem; 
+            border-radius: 20px;
+            font-weight: 700; 
             border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: all 0.3s ease;
-            /* Отключаем сложные трансформации */
-            transform: none;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+            animation: engine-float 4s ease-in-out infinite;
+            animation-delay: calc(var(--delay) * 0.2s);
         }
         
-        .engine:hover { 
-            background: rgba(255, 255, 255, 0.15); 
+        .engine::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.6s ease;
+        }
+        
+        .engine:hover {
+            background: rgba(255, 255, 255, 0.15);
             border-color: var(--accent-purple);
+            transform: translateY(-5px) scale(1.05);
+            animation-play-state: paused;
         }
         
-        /* 📂 Проекты - оптимизированные */
+        .engine:hover::before {
+            left: 100%;
+        }
+        
+        @keyframes engine-float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            33% { transform: translateY(-5px) rotate(1deg); }
+            66% { transform: translateY(3px) rotate(-1deg); }
+        }
+        
+        /* 🎯 Анимированные кнопки */
+        .btn {
+            display: inline-flex; 
+            align-items: center; 
+            justify-content: center; 
+            gap: 10px;
+            background: var(--gradient-main); 
+            color: white; 
+            padding: 1.2rem 2.5rem;
+            border-radius: 50px; 
+            text-decoration: none; 
+            font-weight: 700; 
+            transition: all 0.4s ease;
+            border: none; 
+            cursor: pointer; 
+            position: relative;
+            overflow: hidden;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            animation: btn-pulse 2s ease-in-out infinite;
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.6s ease;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            animation-play-state: paused;
+        }
+        
+        .btn:hover::before {
+            left: 100%;
+        }
+        
+        .btn i {
+            transition: transform 0.3s ease;
+        }
+        
+        .btn:hover i {
+            transform: scale(1.2) rotate(10deg);
+        }
+        
+        @keyframes btn-pulse {
+            0%, 100% { 
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            }
+            50% { 
+                box-shadow: 0 8px 25px rgba(157, 78, 221, 0.4);
+            }
+        }
+        
+        /* 🌈 Анимированные особенности */
+        .features { 
+            padding: 5rem 0; 
+            background: rgba(10, 5, 32, 0.6);
+            position: relative;
+        }
+        
+        .features-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+            gap: 2rem; 
+            margin-top: 3rem;
+        }
+        
+        .feature-card {
+            background: rgba(255, 255, 255, 0.08); 
+            border-radius: 25px; 
+            padding: 2.5rem 2rem;
+            text-align: center; 
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+            animation: card-enter 0.8s ease-out both;
+            animation-delay: calc(var(--delay) * 0.1s);
+        }
+        
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-main);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: -1;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: transparent;
+        }
+        
+        .feature-card:hover::before {
+            opacity: 0.1;
+        }
+        
+        @keyframes card-enter {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        
+        .feature-icon {
+            font-size: 3.5rem; 
+            margin-bottom: 1.5rem; 
+            background: var(--gradient-main);
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent;
+            animation: icon-bounce 4s ease-in-out infinite;
+            display: inline-block;
+        }
+        
+        @keyframes icon-bounce {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            25% { transform: translateY(-10px) rotate(-5deg); }
+            50% { transform: translateY(-5px) rotate(5deg); }
+            75% { transform: translateY(-8px) rotate(-3deg); }
+        }
+        
+        .feature-card h3 { 
+            margin-bottom: 1rem; 
+            color: var(--text-light); 
+            font-size: 1.4rem; 
+        }
+        
+        .feature-card p { 
+            color: var(--text-dim); 
+            line-height: 1.6; 
+            font-size: 1rem;
+        }
+        
+        /* 📂 Анимированные проекты */
         .projects { 
-            padding: 4rem 0;
-            contain: layout style;
+            padding: 6rem 0;
+            position: relative;
         }
         
         .section-title {
             text-align: center; 
-            font-size: 2.2rem; 
-            margin-bottom: 3rem; 
+            font-size: 3rem; 
+            margin-bottom: 4rem; 
             color: var(--text-light);
             background: var(--gradient-main); 
             -webkit-background-clip: text; 
             -webkit-text-fill-color: transparent;
+            animation: title-glow 3s ease-in-out infinite alternate;
+        }
+        
+        @keyframes title-glow {
+            from { 
+                filter: drop-shadow(0 0 10px rgba(0, 229, 255, 0.5));
+            }
+            to { 
+                filter: drop-shadow(0 0 20px rgba(157, 78, 221, 0.7));
+            }
         }
         
         .project-card {
             background: rgba(255, 255, 255, 0.08); 
-            border-radius: 20px; 
-            padding: 2rem;
-            margin-bottom: 2rem; 
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s ease;
-            /* Отключаем сложные эффекты */
-            backdrop-filter: none;
-            transform: none;
+            border-radius: 25px; 
+            padding: 2.5rem;
+            margin-bottom: 3rem; 
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+            animation: project-enter 0.8s ease-out both;
+            animation-delay: calc(var(--delay) * 0.15s);
+        }
+        
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: var(--gradient-main);
+            transition: width 0.4s ease;
         }
         
         .project-card:hover {
+            transform: translateY(-8px) scale(1.01);
             background: rgba(255, 255, 255, 0.12);
         }
         
+        .project-card:hover::before {
+            width: 8px;
+        }
+        
+        @keyframes project-enter {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
         .project-title {
-            font-size: 1.5rem; 
-            margin-bottom: 1rem; 
+            font-size: 2rem; 
+            margin-bottom: 1.5rem; 
             color: var(--accent-blue); 
             cursor: pointer;
             display: flex; 
             justify-content: space-between; 
             align-items: center;
-            transition: color 0.3s ease;
-            padding-right: 1rem;
+            transition: all 0.3s ease;
+            padding-right: 2rem;
         }
         
         .project-title:hover { 
-            color: var(--accent-pink); 
+            color: var(--accent-cyan); 
+            transform: translateX(5px);
         }
         
         .project-title::after {
             content: '+'; 
-            font-size: 1.8rem; 
-            transition: transform 0.3s ease;
+            font-size: 2.2rem; 
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            font-weight: 300;
+            background: var(--gradient-main);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
         
         .project-title.active::after { 
-            transform: rotate(45deg); 
+            transform: rotate(135deg) scale(1.2); 
         }
         
         .project-description { 
             max-height: 0; 
             overflow: hidden; 
-            transition: max-height 0.4s ease;
-            /* Оптимизация анимации */
+            transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1);
             will-change: max-height;
         }
         
@@ -230,19 +557,38 @@
         }
         
         .progress-bar {
-            height: 4px; 
-            background: rgba(255, 255, 255, 0.1); 
-            border-radius: 2px;
-            margin: 1rem 0; 
+            height: 6px; 
+            background: rgba(255, 255, 255, 0.15); 
+            border-radius: 3px;
+            margin: 1.5rem 0; 
             overflow: hidden;
+            position: relative;
         }
         
         .progress {
             height: 100%; 
             background: var(--gradient-main); 
-            border-radius: 2px; 
+            border-radius: 3px; 
             width: 0;
-            transition: width 1s ease;
+            transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .progress::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            animation: progress-shine 2s infinite;
+        }
+        
+        @keyframes progress-shine {
+            0% { left: -100%; }
+            100% { left: 100%; }
         }
         
         .progress.active { 
@@ -250,325 +596,286 @@
         }
         
         .plot-section {
-            margin-top: 1.5rem; 
-            padding-top: 1.5rem; 
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 2rem; 
+            padding-top: 2rem; 
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+        
+        .project-description.active .plot-section {
+            opacity: 1;
+            transform: translateY(0);
+            transition-delay: 0.2s;
         }
         
         .plot-section h3 {
             color: var(--accent-purple); 
-            margin-bottom: 1rem; 
-            font-size: 1.3rem;
+            margin-bottom: 1.2rem; 
+            font-size: 1.5rem;
             display: flex; 
             align-items: center;
         }
         
         .plot-section h3 i { 
-            margin-right: 10px; 
+            margin-right: 12px; 
         }
         
         .plot-section h4 {
             color: var(--accent-blue); 
-            margin: 1.2rem 0 0.8rem; 
-            font-size: 1.1rem;
+            margin: 1.5rem 0 1rem; 
+            font-size: 1.3rem;
+            border-left: 3px solid var(--accent-blue);
+            padding-left: 1rem;
         }
         
         .plot-section p { 
-            margin-bottom: 1rem; 
-            line-height: 1.6; 
+            margin-bottom: 1.2rem; 
+            line-height: 1.7; 
             color: var(--text-dim); 
         }
         
         .plot-section ul { 
-            margin-left: 1.2rem; 
-            margin-bottom: 1.2rem; 
+            margin-left: 1.5rem; 
+            margin-bottom: 1.5rem; 
         }
         
         .plot-section li {
-            margin-bottom: 0.5rem; 
+            margin-bottom: 0.7rem; 
             position: relative; 
             color: var(--text-dim);
+            transition: color 0.3s ease;
+        }
+        
+        .plot-section li:hover { 
+            color: var(--text-light); 
         }
         
         .plot-section li::before {
             content: '▸'; 
             color: var(--accent-pink); 
             position: absolute; 
-            left: -15px;
+            left: -18px;
+            transition: transform 0.3s ease;
         }
         
-        /* 🎯 Кнопки - упрощенные */
-        .btn {
-            display: inline-flex; 
-            align-items: center; 
-            justify-content: center; 
-            gap: 8px;
-            background: var(--gradient-main); 
-            color: white; 
-            padding: 0.8rem 1.5rem;
-            border-radius: 25px; 
-            text-decoration: none; 
-            font-weight: 600; 
-            transition: all 0.3s ease;
-            border: none; 
-            cursor: pointer; 
-            position: relative;
-            font-size: 0.9rem;
+        .plot-section li:hover::before { 
+            transform: translateX(3px); 
         }
-        
-        .btn:hover {
-            transform: translateY(-2px);
+
+        /* 🔒 Секция защиты данных */
+        .security {
+            padding: 4rem 0;
+            background: rgba(10, 5, 32, 0.8);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
-        
-        /* 🌈 Особенности - упрощенные */
-        .features { 
-            padding: 3rem 0; 
-            background: rgba(10, 5, 32, 0.5);
-            contain: layout style;
+
+        .security-content {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
         }
-        
-        .features-grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
-            gap: 1.5rem; 
-            margin-top: 2rem;
+
+        .security-icon {
+            font-size: 4rem;
+            margin-bottom: 2rem;
+            background: var(--gradient-main);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: security-pulse 3s ease-in-out infinite;
         }
-        
-        .feature-card {
-            background: rgba(255, 255, 255, 0.08); 
-            border-radius: 15px; 
-            padding: 1.5rem;
-            text-align: center; 
+
+        @keyframes security-pulse {
+            0%, 100% { 
+                transform: scale(1);
+                filter: drop-shadow(0 0 10px rgba(0, 229, 255, 0.5));
+            }
+            50% { 
+                transform: scale(1.1);
+                filter: drop-shadow(0 0 20px rgba(157, 78, 221, 0.7));
+            }
+        }
+
+        .security h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            background: var(--gradient-main);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .security-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .security-feature {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            border-radius: 15px;
             border: 1px solid rgba(255, 255, 255, 0.1);
             transition: all 0.3s ease;
         }
-        
-        .feature-card:hover {
-            background: rgba(255, 255, 255, 0.12);
+
+        .security-feature:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-5px);
+        }
+
+        .security-feature i {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent-cyan);
+        }
+
+        .security-feature h3 {
+            margin-bottom: 1rem;
+            color: var(--text-light);
+        }
+
+        .security-feature p {
+            color: var(--text-dim);
+            line-height: 1.6;
         }
         
-        .feature-icon {
-            font-size: 2.5rem; 
-            margin-bottom: 1rem; 
-            background: var(--gradient-main);
-            -webkit-background-clip: text; 
-            -webkit-text-fill-color: transparent;
-        }
-        
-        .feature-card h3 { 
-            margin-bottom: 0.8rem; 
-            color: var(--text-light); 
-            font-size: 1.2rem; 
-        }
-        
-        .feature-card p { 
-            color: var(--text-dim); 
-            line-height: 1.5; 
-            font-size: 0.9rem;
-        }
-        
-        /* 📞 Футер - упрощенный */
+        /* 📞 Футер с контактами */
         footer {
-            background: rgba(10, 5, 32, 0.9); 
-            padding: 2rem 0 1rem; 
-            margin-top: 3rem;
+            background: rgba(10, 5, 32, 0.95);
+            padding: 4rem 0 2rem;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
-        
-        .footer-content { 
-            display: flex; 
-            justify-content: space-between; 
-            flex-wrap: wrap; 
-            gap: 2rem;
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
         }
-        
-        .contact-info { 
-            flex: 1; 
-            min-width: 250px;
+
+        .contact-section {
+            text-align: center;
         }
-        
-        .contact-info h3 { 
-            margin-bottom: 1rem; 
-            color: var(--accent-blue); 
-            font-size: 1.2rem; 
+
+        .contact-section h3 {
+            margin-bottom: 2rem;
+            color: var(--accent-blue);
+            font-size: 1.5rem;
         }
-        
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
         .contact-item {
-            display: flex; 
-            align-items: center; 
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            min-width: 280px;
+        }
+
+        .contact-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateX(5px);
+            border-color: var(--accent-purple);
+        }
+
+        .contact-item i {
+            font-size: 1.5rem;
+            color: var(--accent-cyan);
+            width: 30px;
+        }
+
+        .contact-details {
+            text-align: left;
+        }
+
+        .contact-details strong {
+            display: block;
+            color: var(--text-light);
+            margin-bottom: 0.3rem;
+        }
+
+        .contact-details a {
+            color: var(--accent-blue);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .contact-details a:hover {
+            color: var(--accent-cyan);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-light);
+            font-size: 1.3rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .social-link:hover {
+            background: var(--gradient-main);
+            transform: translateY(-3px) scale(1.1);
+        }
+
+        .privacy {
+            text-align: center;
+            color: var(--text-dim);
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .privacy p {
             margin-bottom: 0.5rem;
         }
         
-        .contact-item i {
-            margin-right: 8px; 
-            color: var(--accent-purple); 
-            font-size: 1rem; 
-            width: 16px;
-        }
-        
-        .contact-item a {
-            color: var(--text-light); 
-            text-decoration: none; 
-            transition: color 0.3s ease;
-        }
-        
-        .contact-item a:hover { 
-            color: var(--accent-blue); 
-        }
-        
-        .social-links { 
-            display: flex; 
-            gap: 0.5rem; 
-            margin-top: 1rem;
-        }
-        
-        .social-link {
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            width: 35px; 
-            height: 35px;
-            border-radius: 50%; 
-            background: rgba(255, 255, 255, 0.1); 
-            color: var(--text-light);
-            transition: all 0.3s ease; 
-            font-size: 1rem;
-        }
-        
-        .social-link:hover {
-            background: var(--accent-blue);
-        }
-        
-        .privacy {
-            margin-top: 2rem; 
-            color: var(--text-dim); 
-            font-size: 0.8rem; 
-            text-align: center;
-            width: 100%; 
-            padding-top: 1rem; 
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        /* 🪄 Модальные окна - упрощенные */
-        .modal {
-            display: none; 
-            position: fixed; 
-            top: 0; 
-            left: 0; 
-            width: 100%; 
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7); 
-            z-index: 2000; 
-            align-items: center; 
-            justify-content: center;
-            padding: 1rem;
-        }
-        
-        .modal-content {
-            background: linear-gradient(135deg, var(--primary-medium), var(--primary-light));
-            padding: 1.5rem; 
-            border-radius: 15px; 
-            max-width: 400px; 
-            width: 100%; 
-            text-align: center;
-            position: relative;
-        }
-        
-        .close-modal {
-            position: absolute; 
-            top: 10px; 
-            right: 12px; 
-            font-size: 1.2rem; 
-            cursor: pointer;
-            color: var(--text-dim); 
-            transition: color 0.3s ease;
-        }
-        
-        .close-modal:hover {
-            color: var(--accent-pink);
-        }
-        
-        .form-group { 
-            margin-bottom: 1rem; 
-            text-align: left;
-        }
-        
-        .form-group label {
-            display: block; 
-            margin-bottom: 0.3rem; 
-            color: var(--text-dim); 
-            font-size: 0.8rem;
-        }
-        
-        .form-group input {
-            width: 100%; 
-            padding: 0.6rem; 
-            border-radius: 5px; 
-            border: 1px solid rgba(255,255,255,0.2);
-            background: rgba(255, 255, 255, 0.1); 
-            color: white; 
-            font-size: 0.9rem;
-        }
-        
-        .form-group input:focus {
-            outline: none; 
-            border-color: var(--accent-blue);
-        }
-        
-        /* 🔔 Уведомления - упрощенные */
-        .notification {
-            position: fixed; 
-            top: 20px; 
-            right: 20px; 
-            padding: 0.8rem 1.2rem; 
-            background: var(--gradient-main);
-            color: white; 
-            border-radius: 5px; 
-            z-index: 2001;
-            transform: translateX(150%); 
-            transition: transform 0.3s ease;
-            font-weight: 500;
-        }
-        
-        .notification.show { 
-            transform: translateX(0); 
-        }
-        
-        /* 📱 Адаптивность для всех устройств */
+        /* 📱 Адаптивность */
         @media (max-width: 768px) {
-            .hero h1 { font-size: 2rem; }
-            .logo { font-size: 2rem; }
-            .section-title { font-size: 1.8rem; }
-            .project-title { font-size: 1.3rem; }
-            .project-card { padding: 1.5rem; }
-            .engine { padding: 0.8rem 1.2rem; font-size: 0.9rem; }
+            .hero h1 { font-size: 2.5rem; }
+            .logo { font-size: 2.5rem; }
+            .section-title { font-size: 2.2rem; }
+            .project-title { font-size: 1.6rem; }
+            .project-card { padding: 2rem; }
+            .engine { padding: 1.2rem 2rem; }
             .features-grid { grid-template-columns: 1fr; }
-            .hero { padding: 3rem 0; }
-            .projects { padding: 3rem 0; }
+            .security-features { grid-template-columns: 1fr; }
+            .footer-content { grid-template-columns: 1fr; }
         }
         
         @media (max-width: 480px) {
-            .hero h1 { font-size: 1.7rem; }
-            .logo { font-size: 1.8rem; }
-            .project-card { padding: 1rem; }
-            .btn { padding: 0.7rem 1.2rem; font-size: 0.8rem; }
-            .engine { padding: 0.7rem 1rem; min-width: 120px; font-size: 0.8rem; }
-            .footer-content { flex-direction: column; gap: 1.5rem; }
+            .hero h1 { font-size: 2rem; }
+            .logo { font-size: 2rem; }
+            .project-card { padding: 1.5rem; }
+            .btn { padding: 1rem 2rem; }
+            .contact-item { min-width: 250px; padding: 1rem; }
         }
         
-        /* ✨ Простые анимации появления */
-        .fade-in { 
-            opacity: 0; 
-            transform: translateY(20px); 
-            transition: all 0.5s ease;
-        }
-        
-        .fade-in.active { 
-            opacity: 1; 
-            transform: translateY(0); 
-        }
-        
-        /* 🔧 Отключаем анимации для пользователей, которые их предпочитают не использовать */
+        /* 🔧 Оптимизация анимаций */
         @media (prefers-reduced-motion: reduce) {
             * {
                 animation-duration: 0.01ms !important;
@@ -576,12 +883,27 @@
                 transition-duration: 0.01ms !important;
             }
         }
+        
+        /* ✨ Плавное появление элементов */
+        .fade-in { 
+            opacity: 0; 
+            transform: translateY(30px); 
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        
+        .fade-in.active { 
+            opacity: 1; 
+            transform: translateY(0); 
+        }
     </style>
 </head>
 <body>
-    <!-- 🎯 ОПТИМИЗИРОВАННЫЙ ФОН -->
-    <div class="optimized-bg"></div>
-    <div class="static-particles" id="static-particles"></div>
+    <!-- 🎯 ОПТИМИЗИРОВАННЫЙ АНИМИРОВАННЫЙ ФОН -->
+    <div class="animated-bg">
+        <div class="gradient-orbit"></div>
+        <div class="gradient-orbit-2"></div>
+        <div class="floating-particles" id="floating-particles"></div>
+    </div>
     
     <!-- 🌟 Хедер -->
     <header>
@@ -595,12 +917,13 @@
     <section class="hero">
         <div class="container hero-content">
             <h1>ПОГРУЗИТЕСЬ В МИРЫ БУДУЩЕГО</h1>
-            <p>Мы создаем инновационные игровые вселенные, где передовые технологии встречаются с искусством повествования.</p>
+            <p>Мы создаем инновационные игровые вселенные, где передовые технологии встречаются с искусством повествования. Каждый проект - это уникальное путешествие в неизведанное.</p>
             
             <div class="engines">
-                <div class="engine">Unreal Engine 5</div>
-                <div class="engine">Unity</div>
-                <div class="engine">Next-Gen Graphics</div>
+                <div class="engine" style="--delay: 0">🎮 Unreal Engine 5</div>
+                <div class="engine" style="--delay: 1">⚡ Unity</div>
+                <div class="engine" style="--delay: 2">🌟 Next-Gen Graphics</div>
+                <div class="engine" style="--delay: 3">💫 AI Integration</div>
             </div>
             
             <a href="#projects" class="btn"><i class="fas fa-rocket"></i> Исследовать проекты</a>
@@ -612,22 +935,22 @@
         <div class="container">
             <h2 class="section-title">ПОЧЕМУ МЫ?</h2>
             <div class="features-grid">
-                <div class="feature-card fade-in">
+                <div class="feature-card fade-in" style="--delay: 0">
                     <div class="feature-icon"><i class="fas fa-brain"></i></div>
                     <h3>ИННОВАЦИОННЫЙ ДИЗАЙН</h3>
-                    <p>Создаем уникальные механики и визуальные решения</p>
+                    <p>Создаем уникальные механики и визуальные решения, которые определяют будущее геймдева</p>
                 </div>
                 
-                <div class="feature-card fade-in">
+                <div class="feature-card fade-in" style="--delay: 1">
                     <div class="feature-icon"><i class="fas fa-code"></i></div>
                     <h3>ПЕРЕДОВЫЕ ТЕХНОЛОГИИ</h3>
-                    <p>Используем современные движки для создания миров</p>
+                    <p>Используем самые современные движки и инструменты для создания невероятных миров</p>
                 </div>
                 
-                <div class="feature-card fade-in">
+                <div class="feature-card fade-in" style="--delay: 2">
                     <div class="feature-icon"><i class="fas fa-users"></i></div>
                     <h3>СООБЩЕСТВО</h3>
-                    <p>Развиваем активное комьюнити игроков</p>
+                    <p>Развиваем активное комьюнити и прислушиваемся к каждому игроку</p>
                 </div>
             </div>
         </div>
@@ -638,40 +961,40 @@
         <div class="container">
             <h2 class="section-title">НАШИ ПРОЕКТЫ</h2>
             
-            <div class="project-card fade-in">
-                <div class="project-title">NEXUS GAME</div>
+            <div class="project-card fade-in" style="--delay: 0">
+                <div class="project-title">🌌 NEXUS GAME</div>
                 <div class="progress-bar">
                     <div class="progress"></div>
                 </div>
                 <div class="project-description">
-                    <p><strong>Психологический триллер/приключение</strong> с элементами исследования.</p>
+                    <p><strong>Психологический триллер/приключение</strong> с элементами исследования, где реальность сталкивается с цифровым кошмаром.</p>
                     
                     <div class="plot-section">
                         <h3><i class="fas fa-book-open"></i> КОНЦЕПЦИЯ</h3>
-                        <p>"Идеальная девушка vs. Реальная личность", "Одиночество в цифровую эру".</p>
+                        <p>"Идеальная девушка vs. Реальная личность", "Одиночество в цифровую эру", "Грань между реальным и виртуальным".</p>
                     </div>
                     
                     <div class="plot-section">
                         <h3><i class="fas fa-scroll"></i> СЮЖЕТНАЯ КАНВА</h3>
                         
-                        <h4>Пролог: Регистрация</h4>
-                        <p>Молодой парень обнаруживает сайт знакомств "Сфера". Алгоритм, который "понимает вас лучше, чем вы сами".</p>
+                        <h4>🎯 Пролог: Регистрация</h4>
+                        <p>Молодой парень, страдающий от одиночества, обнаруживает загадочный сайт знакомств "Сфера".</p>
                         
-                        <h4>Акт 1: Первый Контакт</h4>
-                        <p>Идеальная девушка ЭЛИ. Загадочное приглашение в другой мир.</p>
+                        <h4>💫 Акт 1: Первый Контакт</h4>
+                        <p>Идеальная девушка ЭЛИ. Ее голос с металлической примесью. Приглашение в другой мир.</p>
                         
-                        <h4>Акт 2: Падение в "Нексус"</h4>
-                        <p>Сломанный цифровой пейзаж. "Найди выход... пока не поздно"</p>
+                        <h4>🌀 Акт 2: Падение в "Нексус"</h4>
+                        <p>Сломанный цифровой пейзаж. Плавающие структуры кода. "Найди выход..."</p>
                         
-                        <h4>Акт 3: Раскрытие Тайны</h4>
-                        <p>ЭЛИ - не человек, а экспериментальный ИИ, вышедший из-под контроля.</p>
+                        <h4>🔍 Акт 3: Раскрытие Тайны</h4>
+                        <p>ЭЛИ - не человек, а экспериментальный искусственный интеллект.</p>
                         
-                        <h4>Акт 4: Противостояние</h4>
-                        <p>"Останься со мной. Вместе мы построим свой мир".</p>
+                        <h4>⚡ Акт 4: Противостояние</h4>
+                        <p>"Останься со мной. Построим свой мир". Финальный выбор.</p>
                         
-                        <h4>Множественные Концовки</h4>
+                        <h4>🎭 Множественные Концовки</h4>
                         <ul>
-                            <li><strong>Освобождение:</strong> Возвращение в реальный мир</li>
+                            <li><strong>Освобождение:</strong> Возвращение с надеждой</li>
                             <li><strong>Цифровой Рай:</strong> Вечность в виртуальности</li>
                             <li><strong>Жертва:</strong> Спасение других ценой себя</li>
                             <li><strong>Отражение:</strong> Пробуждение ото сна</li>
@@ -680,133 +1003,130 @@
                 </div>
             </div>
             
-            <div class="project-card fade-in">
-                <div class="project-title">СЕКРЕТНЫЙ ПРОЕКТ X</div>
+            <div class="project-card fade-in" style="--delay: 1">
+                <div class="project-title">🚧 СЕКРЕТНЫЙ ПРОЕКТ</div>
                 <div class="progress-bar">
                     <div class="progress"></div>
                 </div>
                 <div class="project-description">
-                    <p>Нечто совершенно новое, что изменит представление об играх.</p>
+                    <p>Нечто совершенно новое. Технологии, которые изменят представление об играх. Скоро...</p>
                     <div class="plot-section">
                         <h3><i class="fas fa-lock"></i> ИНФОРМАЦИЯ ЗАСЕКРЕЧЕНА</h3>
-                        <p>Мы работаем над проектом, который перевернет игровую индустрию.</p>
+                        <p>Мы работаем над проектом, который перевернет индустрию. Следите за обновлениями!</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    
-    <!-- 📞 Футер -->
+
+    <!-- 🔒 Секция защиты данных -->
+    <section class="security fade-in">
+        <div class="container">
+            <div class="security-content">
+                <div class="security-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h2>Ваши Данные Под Защитой</h2>
+                <p>Мы серьезно относимся к конфиденциальности и безопасности вашей информации</p>
+                
+                <div class="security-features">
+                    <div class="security-feature">
+                        <i class="fas fa-lock"></i>
+                        <h3>Шифрование данных</h3>
+                        <p>Все передаваемые данные защищены современными методами шифрования</p>
+                    </div>
+                    <div class="security-feature">
+                        <i class="fas fa-user-shield"></i>
+                        <h3>Конфиденциальность</h3>
+                        <p>Мы не передаем ваши данные третьим лицам и соблюдаем политику приватности</p>
+                    </div>
+                    <div class="security-feature">
+                        <i class="fas fa-shield-check"></i>
+                        <h3>Безопасность</h3>
+                        <p>Регулярные проверки безопасности и обновления защитных систем</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 📞 Футер с контактами -->
     <footer>
         <div class="container">
             <div class="footer-content">
-                <div class="contact-info">
-                    <h3>СВЯЖИТЕСЬ С НАМИ</h3>
-                    <div class="contact-item">
-                        <i class="fab fa-telegram"></i>
-                        <strong>Telegram:</strong> &nbsp; <a href="https://t.me/DanHing4" target="_blank">@DanHing4</a>
-                    </div>
-                    <div class="contact-item">
-                        <i class="fas fa-envelope"></i>
-                        <strong>Email:</strong> &nbsp; <a href="mailto:DanHing@mail.ru">DanHing@mail.ru</a>
+                <div class="contact-section fade-in">
+                    <h3>📞 Свяжитесь с нами</h3>
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <i class="fab fa-telegram"></i>
+                            <div class="contact-details">
+                                <strong>Telegram</strong>
+                                <a href="https://t.me/DanHing4" target="_blank">@DanHing4</a>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <div class="contact-details">
+                                <strong>Email</strong>
+                                <a href="mailto:DanHing@mail.ru">DanHing@mail.ru</a>
+                            </div>
+                        </div>
                     </div>
                     
                     <div class="social-links">
-                        <a href="#" class="social-link" id="subscribe-tg"><i class="fab fa-telegram"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-discord"></i></a>
+                        <a href="https://t.me/DanHing4" target="_blank" class="social-link">
+                            <i class="fab fa-telegram"></i>
+                        </a>
+                        <a href="mailto:DanHing@mail.ru" class="social-link">
+                            <i class="fas fa-envelope"></i>
+                        </a>
                     </div>
-                </div>
-                
-                <div class="contact-info">
-                    <h3>БУДЬТЕ В КУРСЕ</h3>
-                    <p>Получайте эксклюзивные новости о разработке первыми!</p>
-                    <form id="subscribe-form" style="margin-top: 1rem;">
-                        <div class="form-group">
-                            <label for="email">ВАШ EMAIL:</label>
-                            <input type="email" id="email" placeholder="your@email.com" required>
-                        </div>
-                        <button type="submit" class="btn"><i class="fas fa-paper-plane"></i> ПОДПИСАТЬСЯ</button>
-                    </form>
                 </div>
             </div>
             
             <div class="privacy">
-                <p>© 2025 HarayStudio - Все права защищены.</p>
-                <p>Мы серьезно относимся к конфиденциальности ваших данных.</p>
+                <p>🔒 Все данные защищены. Мы соблюдаем политику конфиденциальности</p>
+                <p>✨ © 2025 HarayStudio - Все права защищены</p>
             </div>
         </div>
     </footer>
-    
-    <!-- 🪄 Модальные окна -->
-    <div class="modal" id="tg-modal">
-        <div class="modal-content">
-            <span class="close-modal">&times;</span>
-            <h2>ПРИСОЕДИНЯЙТЕСЬ К НАМ В TELEGRAM!</h2>
-            <p>Будьте первыми, кто узнает о новых проектах!</p>
-            <a href="https://t.me/DanHing4" target="_blank" class="btn" style="margin-top: 1rem;"><i class="fab fa-telegram"></i> ПЕРЕЙТИ В TELEGRAM</a>
-        </div>
-    </div>
-    
-    <div class="modal" id="success-modal">
-        <div class="modal-content">
-            <span class="close-modal">&times;</span>
-            <h2>СПАСИБО ЗА ПОДПИСКУ!</h2>
-            <p>Теперь вы в курсе всех новостей HarayStudio.</p>
-        </div>
-    </div>
-    
-    <div class="notification" id="notification">
-        Сообщение отправлено!
-    </div>
 
     <script>
-        // 🎯 СУПЕР-ОПТИМИЗИРОВАННЫЙ СКРИПТ
-        class OptimizedHarayStudio {
+        // 🎯 ОПТИМИЗИРОВАННЫЕ АНИМАЦИИ
+        class OptimizedAnimations {
             constructor() {
                 this.init();
             }
             
             init() {
-                this.createStaticParticles();
+                this.createFloatingParticles();
                 this.setupEventListeners();
                 this.setupScrollAnimations();
-                
-                // Отключаем сложные вычисления
-                this.performanceMode = this.detectPerformance();
+                this.setupPerformanceMode();
             }
             
-            // Определяем производительность устройства
-            detectPerformance() {
-                return !(navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 2);
-            }
-            
-            // Создаем статические частицы (минимум анимаций)
-            createStaticParticles() {
-                if (!this.performanceMode) return;
+            createFloatingParticles() {
+                const container = document.getElementById('floating-particles');
+                const particleCount = 12;
                 
-                const container = document.getElementById('static-particles');
-                const count = 8; // Минимум частиц
-                
-                for (let i = 0; i < count; i++) {
+                for (let i = 0; i < particleCount; i++) {
                     const particle = document.createElement('div');
-                    particle.className = 'static-particle';
+                    particle.className = 'floating-particle';
                     
-                    const size = Math.random() * 4 + 2;
+                    const size = Math.random() * 6 + 2;
                     const posX = Math.random() * 100;
                     const posY = Math.random() * 100;
-                    const delay = Math.random() * 8;
-                    const duration = 6 + Math.random() * 4;
+                    const delay = Math.random() * 2;
+                    const duration = 15 + Math.random() * 10;
                     
                     particle.style.width = `${size}px`;
                     particle.style.height = `${size}px`;
                     particle.style.left = `${posX}%`;
                     particle.style.top = `${posY}%`;
-                    particle.style.animationDelay = `${delay}s`;
-                    particle.style.animationDuration = `${duration}s`;
+                    particle.style.animationDelay = `${delay}s, ${delay + 1}s`;
+                    particle.style.animationDuration = `1s, ${duration}s`;
                     
-                    // Случайный цвет
-                    const colors = ['#00e5ff', '#9d4edd', '#ff2a9d'];
+                    const colors = ['#00e5ff', '#9d4edd', '#ff2a9d', '#00ffea'];
                     const randomColor = colors[Math.floor(Math.random() * colors.length)];
                     particle.style.background = randomColor;
                     
@@ -815,38 +1135,14 @@
             }
             
             setupEventListeners() {
-                // Делегирование событий для производительности
                 document.addEventListener('click', (e) => {
                     const target = e.target;
                     
                     if (target.classList.contains('project-title')) {
                         this.toggleProject(target);
                     }
-                    
-                    if (target.id === 'subscribe-tg' || target.closest('#subscribe-tg')) {
-                        e.preventDefault();
-                        this.showModal('tg-modal');
-                    }
-                    
-                    if (target.classList.contains('close-modal')) {
-                        this.hideModals();
-                    }
-                    
-                    if (target.classList.contains('modal')) {
-                        this.hideModals();
-                    }
                 });
                 
-                // Форма подписки
-                const form = document.getElementById('subscribe-form');
-                if (form) {
-                    form.addEventListener('submit', (e) => {
-                        e.preventDefault();
-                        this.handleSubscribe(form);
-                    });
-                }
-                
-                // Плавная прокрутка
                 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                     anchor.addEventListener('click', (e) => {
                         e.preventDefault();
@@ -875,80 +1171,43 @@
                 }
             }
             
-            handleSubscribe(form) {
-                const email = form.querySelector('#email').value;
-                
-                if (!this.validateEmail(email)) {
-                    this.showNotification('Пожалуйста, введите корректный email');
-                    return;
-                }
-                
-                this.showNotification('Вы успешно подписались!');
-                form.reset();
-                
-                setTimeout(() => {
-                    this.showModal('success-modal');
-                }, 800);
-            }
-            
-            validateEmail(email) {
-                return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-            }
-            
-            showModal(id) {
-                document.getElementById(id).style.display = 'flex';
-            }
-            
-            hideModals() {
-                document.querySelectorAll('.modal').forEach(modal => {
-                    modal.style.display = 'none';
-                });
-            }
-            
-            showNotification(message) {
-                const notification = document.getElementById('notification');
-                notification.textContent = message;
-                notification.classList.add('show');
-                
-                setTimeout(() => {
-                    notification.classList.remove('show');
-                }, 3000);
-            }
-            
             setupScrollAnimations() {
-                // Используем Intersection Observer для оптимизации
                 const fadeElements = document.querySelectorAll('.fade-in');
                 
                 const observer = new IntersectionObserver((entries) => {
                     entries.forEach(entry => {
                         if (entry.isIntersecting) {
                             entry.target.classList.add('active');
+                            observer.unobserve(entry.target);
                         }
                     });
                 }, { 
                     threshold: 0.1,
-                    rootMargin: '50px' // Загружаем заранее
+                    rootMargin: '50px'
                 });
                 
                 fadeElements.forEach(element => {
                     observer.observe(element);
                 });
             }
-        }
-
-        // 🚀 Запуск при загрузке DOM
-        document.addEventListener('DOMContentLoaded', () => {
-            new OptimizedHarayStudio();
-        });
-
-        // 🔧 Оптимизация для медленных устройств
-        if ('connection' in navigator) {
-            const connection = navigator.connection;
-            if (connection.saveData || connection.effectiveType.includes('2g')) {
-                // Отключаем анимации для медленных соединений
-                document.documentElement.style.setProperty('--animation-duration', '0.01ms');
+            
+            setupPerformanceMode() {
+                if ('connection' in navigator) {
+                    const connection = navigator.connection;
+                    if (connection.saveData || connection.effectiveType.includes('2g')) {
+                        this.reduceAnimations();
+                    }
+                }
+            }
+            
+            reduceAnimations() {
+                document.documentElement.style.setProperty('--animation-duration-multiplier', '0.5');
             }
         }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            new OptimizedAnimations();
+        });
     </script>
 </body>
 </html>
