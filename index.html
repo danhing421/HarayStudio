@@ -3,53 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HarayStudio 🚀 | Создаем игры будущего | 2025</title>
+    <title>HarayStudio 🌌 | Создаем игры будущего | 2025</title>
     <meta name="description" content="HarayStudio - инновационная игровая студия. Unreal Engine 5, Unity. Nexus Game - психологический триллер о цифровой реальности">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --primary-dark: #0a0520; --primary-medium: #1a1258; --primary-light: #2a1d80;
             --accent-blue: #00e5ff; --accent-purple: #9d4edd; --accent-pink: #ff2a9d;
-            --accent-cyan: #00ffea; --accent-magenta: #ff00cc;
+            --accent-cyan: #00ffea; --accent-magenta: #ff00cc; --accent-gold: #ffd700;
             --text-light: #ffffff; --text-dim: #c8c8ff; --text-glow: #e0f7ff;
-            --glow-blue: 0 0 30px rgba(0, 229, 255, 0.6); --glow-purple: 0 0 30px rgba(157, 78, 221, 0.6);
-            --gradient-main: linear-gradient(135deg, var(--accent-blue), var(--accent-purple), var(--accent-pink));
+            --glow-blue: 0 0 40px rgba(0, 229, 255, 0.8); --glow-purple: 0 0 40px rgba(157, 78, 221, 0.8);
+            --glow-pink: 0 0 40px rgba(255, 42, 157, 0.6); --gradient-main: linear-gradient(135deg, var(--accent-blue), var(--accent-purple), var(--accent-pink));
+            --gradient-gold: linear-gradient(45deg, #ffd700, #ffed4e, #ffd700);
         }
         
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', system-ui, sans-serif; }
         body { background: linear-gradient(135deg, var(--primary-dark), var(--primary-medium), var(--primary-light)); color: var(--text-light); min-height: 100vh; overflow-x: hidden; }
         
-        /* 🎪 Анимированный фон с частицами */
-        .particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; }
-        .particle { position: absolute; border-radius: 50%; background: var(--gradient-main); opacity: 0.1; animation: floatParticle 20s infinite linear; }
-        
-        /* 🔮 Пульсирующие неоновые линии */
-        .neon-grid { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; opacity: 0.03; background: 
-            linear-gradient(90deg, transparent 95%, var(--accent-cyan) 100%),
-            linear-gradient(0deg, transparent 95%, var(--accent-magenta) 100%);
-            background-size: 50px 50px; animation: gridPulse 8s ease-in-out infinite; }
-        
-        @keyframes floatParticle {
-            0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.1; }
-            25% { transform: translate(100px, -50px) scale(1.2); opacity: 0.15; }
-            50% { transform: translate(50px, 100px) scale(0.8); opacity: 0.05; }
-            75% { transform: translate(-80px, 50px) scale(1.1); opacity: 0.12; }
+        /* 🌟 Улучшенный анимированный фон */
+        .cosmic-bg { 
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -3;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(157, 78, 221, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(0, 229, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(255, 42, 157, 0.05) 0%, transparent 50%);
+            animation: cosmicShift 20s ease-in-out infinite alternate;
         }
         
-        @keyframes gridPulse {
-            0%, 100% { opacity: 0.02; transform: scale(1); }
-            50% { opacity: 0.06; transform: scale(1.02); }
+        @keyframes cosmicShift {
+            0% { filter: hue-rotate(0deg) brightness(1); }
+            100% { filter: hue-rotate(45deg) brightness(1.1); }
         }
         
-        /* 🎯 Контейнеры */
+        .particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; pointer-events: none; }
+        .particle { 
+            position: absolute; border-radius: 50%; background: var(--gradient-main); 
+            opacity: 0; animation: starTwinkle 8s infinite; 
+        }
+        
+        /* ✨ Анимация мерцания звезд */
+        @keyframes starTwinkle {
+            0%, 100% { opacity: 0; transform: scale(0.5); }
+            50% { opacity: 0.3; transform: scale(1); }
+        }
+        
+        /* 🔮 Пульсирующие неоновые линии с градиентом */
+        .neon-grid { 
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; opacity: 0.05;
+            background: 
+                linear-gradient(90deg, transparent 49.5%, var(--accent-cyan) 50%, transparent 50.5%),
+                linear-gradient(0deg, transparent 49.5%, var(--accent-magenta) 50%, transparent 50.5%);
+            background-size: 60px 60px; 
+            animation: gridFlow 12s linear infinite;
+            mask: radial-gradient(circle at center, black 30%, transparent 70%);
+        }
+        
+        @keyframes gridFlow {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            100% { transform: translate(30px, 30px) rotate(0.5deg); }
+        }
+        
+        /* 🎇 Плавающие голограммы */
+        .hologram { 
+            position: fixed; width: 200px; height: 200px; z-index: -1; opacity: 0.03;
+            background: var(--gradient-main); border-radius: 50%; filter: blur(40px);
+            animation: hologramFloat 25s infinite linear;
+        }
+        
+        .hologram:nth-child(1) { top: 10%; left: 5%; animation-delay: 0s; }
+        .hologram:nth-child(2) { top: 60%; right: 10%; animation-delay: -8s; width: 300px; height: 300px; }
+        .hologram:nth-child(3) { bottom: 20%; left: 20%; animation-delay: -16s; width: 150px; height: 150px; }
+        
+        @keyframes hologramFloat {
+            0% { transform: translate(0, 0) rotate(0deg) scale(1); }
+            33% { transform: translate(100px, -80px) rotate(120deg) scale(1.2); }
+            66% { transform: translate(-60px, 100px) rotate(240deg) scale(0.8); }
+            100% { transform: translate(0, 0) rotate(360deg) scale(1); }
+        }
+        
         .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
         
-        /* 🌟 Хедер с стеклянным морфизмом */
+        /* 🌟 Хедер с улучшенным стеклянным эффектом */
         header { 
             padding: 1.2rem 0; text-align: center; 
-            background: rgba(10, 5, 32, 0.7); backdrop-filter: blur(20px) saturate(180%);
-            position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid rgba(255,255,255,0.1);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3); animation: slideDown 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            background: rgba(10, 5, 32, 0.4); backdrop-filter: blur(25px) saturate(200%);
+            position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid rgba(255,255,255,0.15);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4); animation: slideDown 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            border: 1px solid transparent;
+            background-image: linear-gradient(rgba(10, 5, 32, 0.4), rgba(10, 5, 32, 0.4)),
+                              linear-gradient(135deg, var(--accent-blue), var(--accent-purple), transparent 70%);
+            background-origin: border-box; background-clip: padding-box, border-box;
         }
         
         @keyframes slideDown {
@@ -58,135 +101,300 @@
         }
         
         .logo { 
-            font-size: 3.2rem; font-weight: 900; background: var(--gradient-main); 
+            font-size: 3.5rem; font-weight: 900; background: var(--gradient-main); 
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            text-shadow: var(--glow-blue); letter-spacing: 1px; margin-bottom: 0.3rem;
-            animation: logoGlow 3s ease-in-out infinite alternate;
+            text-shadow: var(--glow-blue); letter-spacing: 2px; margin-bottom: 0.3rem;
+            animation: logoPulse 4s ease-in-out infinite alternate;
+            position: relative; display: inline-block;
         }
         
-        @keyframes logoGlow {
-            from { text-shadow: var(--glow-blue); }
-            to { text-shadow: var(--glow-blue), 0 0 40px rgba(255, 42, 157, 0.4); }
+        .logo::after {
+            content: '🚀'; position: absolute; right: -50px; top: 50%; transform: translateY(-50%);
+            font-size: 2rem; animation: rocketFloat 3s ease-in-out infinite;
         }
         
-        .tagline { font-size: 1.1rem; color: var(--text-dim); max-width: 600px; margin: 0 auto; }
+        @keyframes logoPulse {
+            0% { text-shadow: var(--glow-blue); transform: scale(1); }
+            100% { text-shadow: var(--glow-blue), 0 0 60px rgba(255, 42, 157, 0.6); transform: scale(1.02); }
+        }
         
-        /* 🚀 Герой секция с параллаксом */
+        @keyframes rocketFloat {
+            0%, 100% { transform: translateY(-50%) translateX(0) rotate(0deg); }
+            50% { transform: translateY(-60%) translateX(10px) rotate(5deg); }
+        }
+        
+        .tagline { 
+            font-size: 1.2rem; color: var(--text-dim); max-width: 700px; margin: 0 auto;
+            background: linear-gradient(90deg, var(--text-dim), var(--text-light), var(--text-dim));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-size: 200% auto; animation: textShine 3s linear infinite;
+        }
+        
+        @keyframes textShine {
+            to { background-position: 200% center; }
+        }
+        
+        /* 🚀 Улучшенная герой секция */
         .hero { 
-            padding: 6rem 0; text-align: center; position: relative; overflow: hidden;
-            background: radial-gradient(ellipse at center top, rgba(0, 229, 255, 0.15) 0%, transparent 70%);
+            padding: 8rem 0; text-align: center; position: relative; overflow: hidden;
+            background: radial-gradient(ellipse at center top, rgba(0, 229, 255, 0.2) 0%, transparent 70%);
         }
         
-        .hero-content { position: relative; z-index: 2; animation: fadeUp 1s ease-out; }
+        .hero-content { 
+            position: relative; z-index: 2; animation: heroEntrance 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            perspective: 1000px;
+        }
         
-        @keyframes fadeUp {
+        @keyframes heroEntrance {
+            from { opacity: 0; transform: translateY(100px) rotateX(10deg); }
+            to { opacity: 1; transform: translateY(0) rotateX(0); }
+        }
+        
+        .hero h1 {
+            font-size: 4.5rem; margin-bottom: 2rem; background: var(--gradient-main);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            line-height: 1.1; text-shadow: var(--glow-blue);
+            animation: titleFloat 6s ease-in-out infinite;
+            position: relative; display: inline-block;
+        }
+        
+        .hero h1::before {
+            content: ''; position: absolute; bottom: -10px; left: 0; width: 100%; height: 3px;
+            background: var(--gradient-main); border-radius: 2px; transform: scaleX(0);
+            animation: underlineExpand 2s ease-out 1s forwards;
+        }
+        
+        @keyframes underlineExpand {
+            to { transform: scaleX(1); }
+        }
+        
+        .hero p { 
+            font-size: 1.4rem; max-width: 800px; margin: 0 auto 4rem; color: var(--text-dim); 
+            line-height: 1.7; text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            animation: fadeInUp 1s ease-out 0.5s both;
+        }
+        
+        @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
         
-        .hero h1 {
-            font-size: 4rem; margin-bottom: 1.5rem; background: var(--gradient-main);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            line-height: 1.1; text-shadow: var(--glow-blue);
-            animation: titleFloat 6s ease-in-out infinite;
-        }
-        
-        @keyframes titleFloat {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-        }
-        
-        .hero p { font-size: 1.3rem; max-width: 800px; margin: 0 auto 3rem; color: var(--text-dim); line-height: 1.6; }
-        
-        /* 🎮 Движки с 3D эффектом */
-        .engines { display: flex; justify-content: center; gap: 1.5rem; margin: 3rem 0; flex-wrap: wrap; }
+        /* 🎮 Улучшенные движки */
+        .engines { display: flex; justify-content: center; gap: 2rem; margin: 4rem 0; flex-wrap: wrap; }
         
         .engine {
-            background: rgba(255, 255, 255, 0.07); padding: 1.5rem 2.5rem; border-radius: 20px;
-            font-weight: 700; backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.15);
-            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); position: relative; overflow: hidden;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2); transform-style: preserve-3d;
+            background: rgba(255, 255, 255, 0.08); padding: 1.8rem 3rem; border-radius: 25px;
+            font-weight: 700; backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94); position: relative; overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3); transform-style: preserve-3d;
+            min-width: 200px; text-align: center;
         }
         
         .engine::before {
             content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: left 0.6s ease; transform: translateZ(20px);
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.8s ease; transform: translateZ(20px);
         }
         
         .engine:hover { 
-            transform: translateY(-8px) rotateX(5deg) scale(1.05); box-shadow: var(--glow-purple), 0 15px 40px rgba(0,0,0,0.3);
-            background: rgba(255, 255, 255, 0.12); border-color: var(--accent-purple);
+            transform: translateY(-12px) rotateX(8deg) scale(1.08); 
+            box-shadow: var(--glow-purple), 0 25px 50px rgba(0,0,0,0.4);
+            background: rgba(255, 255, 255, 0.15); border-color: var(--accent-purple);
         }
         
         .engine:hover::before { left: 100%; }
         
-        /* 📂 Проекты с аккордеоном */
-        .projects { padding: 6rem 0; }
+        /* ✨ Анимированные кнопки */
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center; gap: 12px;
+            background: var(--gradient-main); color: white; padding: 1.3rem 2.8rem;
+            border-radius: 50px; text-decoration: none; font-weight: 800; transition: all 0.5s ease;
+            border: none; cursor: pointer; position: relative; overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4); font-size: 1.1rem;
+            text-transform: uppercase; letter-spacing: 1px; text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .btn::before {
+            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.8s ease;
+        }
+        
+        .btn:hover {
+            transform: translateY(-8px) scale(1.08); 
+            box-shadow: var(--glow-purple), var(--glow-pink), 0 20px 40px rgba(0,0,0,0.5);
+            letter-spacing: 2px;
+        }
+        
+        .btn:hover::before { left: 100%; }
+        
+        .btn i { font-size: 1.3em; transition: all 0.4s ease; }
+        .btn:hover i { transform: scale(1.3) rotate(10deg); }
+        
+        /* 🌈 Улучшенные особенности */
+        .features { padding: 6rem 0; background: rgba(10, 5, 32, 0.6); position: relative; }
+        
+        .features::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><polygon fill="rgba(157,78,221,0.05)" points="0,1000 1000,0 1000,1000"/></svg>');
+            animation: featuresBg 20s linear infinite;
+        }
+        
+        @keyframes featuresBg {
+            0% { transform: translateX(0) translateY(0); }
+            100% { transform: translateX(-50px) translateY(-50px); }
+        }
+        
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2.5rem; margin-top: 4rem; }
+        
+        .feature-card {
+            background: rgba(255, 255, 255, 0.08); border-radius: 25px; padding: 3rem 2.5rem;
+            text-align: center; backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.15);
+            transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94); position: relative; overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .feature-card::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--gradient-main); opacity: 0; transition: opacity 0.5s ease; z-index: -1;
+        }
+        
+        .feature-card::after {
+            content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 4px;
+            background: var(--gradient-main); transform: scaleX(0); transition: transform 0.4s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-15px) rotateY(8deg) scale(1.05); 
+            box-shadow: var(--glow-blue), 0 30px 60px rgba(0,0,0,0.4);
+            border-color: transparent;
+        }
+        
+        .feature-card:hover::before { opacity: 0.1; }
+        .feature-card:hover::after { transform: scaleX(1); }
+        
+        .feature-icon {
+            font-size: 4rem; margin-bottom: 2rem; background: var(--gradient-main);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 15px rgba(0, 229, 255, 0.6));
+            animation: iconDance 5s ease-in-out infinite;
+            display: inline-block;
+        }
+        
+        @keyframes iconDance {
+            0%, 100% { transform: translateY(0px) rotate(0deg) scale(1); }
+            25% { transform: translateY(-15px) rotate(-5deg) scale(1.1); }
+            50% { transform: translateY(-5px) rotate(5deg) scale(0.95); }
+            75% { transform: translateY(-10px) rotate(-3deg) scale(1.05); }
+        }
+        
+        .feature-card h3 { 
+            margin-bottom: 1.5rem; color: var(--text-light); font-size: 1.6rem; 
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-cyan));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        
+        .feature-card p { color: var(--text-dim); line-height: 1.7; font-size: 1.1rem; }
+        
+        /* 📂 Улучшенные проекты */
+        .projects { padding: 8rem 0; position: relative; }
+        
+        .projects::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(ellipse at center, rgba(255, 42, 157, 0.05) 0%, transparent 70%);
+            animation: projectPulse 10s ease-in-out infinite alternate;
+        }
+        
+        @keyframes projectPulse {
+            0% { opacity: 0.3; transform: scale(1); }
+            100% { opacity: 0.7; transform: scale(1.1); }
+        }
         
         .section-title {
-            text-align: center; font-size: 3.5rem; margin-bottom: 4rem; color: var(--text-light);
+            text-align: center; font-size: 4rem; margin-bottom: 5rem; color: var(--text-light);
             position: relative; background: var(--gradient-main); -webkit-background-clip: text; 
             -webkit-text-fill-color: transparent; text-shadow: var(--glow-blue);
+            animation: titleGlow 3s ease-in-out infinite alternate;
+        }
+        
+        @keyframes titleGlow {
+            0% { filter: drop-shadow(0 0 20px rgba(0, 229, 255, 0.6)); }
+            100% { filter: drop-shadow(0 0 40px rgba(157, 78, 221, 0.8)); }
         }
         
         .section-title::after {
-            content: ''; display: block; width: 100px; height: 4px; background: var(--gradient-main);
-            margin: 1.5rem auto; border-radius: 2px; box-shadow: var(--glow-blue);
+            content: ''; display: block; width: 120px; height: 5px; background: var(--gradient-main);
+            margin: 2rem auto; border-radius: 3px; box-shadow: var(--glow-blue);
+            animation: linePulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes linePulse {
+            0%, 100% { transform: scaleX(1); opacity: 1; }
+            50% { transform: scaleX(1.1); opacity: 0.8; }
         }
         
         .project-card {
-            background: rgba(255, 255, 255, 0.06); border-radius: 25px; padding: 2.5rem;
-            margin-bottom: 3rem; backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94); position: relative; overflow: hidden;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            background: rgba(255, 255, 255, 0.08); border-radius: 30px; padding: 3rem;
+            margin-bottom: 4rem; backdrop-filter: blur(25px); border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94); position: relative; overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
         }
         
         .project-card::before {
-            content: ''; position: absolute; top: 0; left: 0; width: 6px; height: 100%;
-            background: var(--gradient-main); transition: width 0.4s ease;
+            content: ''; position: absolute; top: 0; left: 0; width: 8px; height: 100%;
+            background: var(--gradient-main); transition: all 0.5s ease; z-index: 1;
+        }
+        
+        .project-card::after {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--gradient-main); opacity: 0; transition: opacity 0.4s ease; z-index: -1;
         }
         
         .project-card:hover {
-            transform: translateY(-10px) scale(1.02); box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
-            background: rgba(255, 255, 255, 0.09); border-color: rgba(157, 78, 221, 0.3);
+            transform: translateY(-15px) scale(1.03); 
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.5), var(--glow-blue);
+            background: rgba(255, 255, 255, 0.12); border-color: rgba(157, 78, 221, 0.4);
         }
         
-        .project-card:hover::before { width: 12px; }
+        .project-card:hover::before { width: 15px; }
+        .project-card:hover::after { opacity: 0.05; }
         
         .project-title {
-            font-size: 2.3rem; margin-bottom: 1.5rem; color: var(--accent-blue); cursor: pointer;
-            display: flex; justify-content: space-between; align-items: center; transition: all 0.3s ease;
-            padding-right: 2rem;
+            font-size: 2.5rem; margin-bottom: 2rem; color: var(--accent-blue); cursor: pointer;
+            display: flex; justify-content: space-between; align-items: center; transition: all 0.4s ease;
+            padding-right: 3rem; position: relative; z-index: 2;
         }
         
-        .project-title:hover { color: var(--accent-cyan); transform: translateX(5px); }
+        .project-title:hover { 
+            color: var(--accent-cyan); transform: translateX(10px); 
+            text-shadow: 0 0 20px rgba(0, 229, 255, 0.6);
+        }
         
         .project-title::after {
-            content: '+'; font-size: 2.5rem; transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            content: '+'; font-size: 3rem; transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
             font-weight: 300; background: var(--gradient-main); -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            -webkit-text-fill-color: transparent; text-shadow: var(--glow-blue);
         }
         
-        .project-title.active::after { transform: rotate(135deg) scale(1.2); }
+        .project-title.active::after { transform: rotate(135deg) scale(1.3); }
         
         .project-description { max-height: 0; overflow: hidden; transition: max-height 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
-        .project-description.active { max-height: 5000px; }
+        .project-description.active { max-height: 6000px; }
         
         .progress-bar {
-            height: 6px; background: rgba(255, 255, 255, 0.1); border-radius: 3px;
-            margin: 1.5rem 0; overflow: hidden; position: relative;
+            height: 8px; background: rgba(255, 255, 255, 0.15); border-radius: 4px;
+            margin: 2rem 0; overflow: hidden; position: relative; z-index: 2;
         }
         
         .progress {
-            height: 100%; background: var(--gradient-main); border-radius: 3px; width: 0;
-            transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden;
+            height: 100%; background: var(--gradient-main); border-radius: 4px; width: 0;
+            transition: width 2s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden;
         }
         
         .progress::after {
             content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-            animation: progressShine 2s infinite;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+            animation: progressShine 3s infinite;
         }
         
         @keyframes progressShine {
@@ -197,247 +405,91 @@
         .progress.active { width: 75%; }
         
         .plot-section {
-            margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(255, 255, 255, 0.15);
-            opacity: 0; transform: translateY(20px); transition: all 0.6s ease;
+            margin-top: 2.5rem; padding-top: 2.5rem; border-top: 1px solid rgba(255, 255, 255, 0.2);
+            opacity: 0; transform: translateY(30px); transition: all 0.7s ease;
+            position: relative; z-index: 2;
         }
         
         .project-description.active .plot-section {
-            opacity: 1; transform: translateY(0); transition-delay: 0.2s;
+            opacity: 1; transform: translateY(0); transition-delay: 0.3s;
         }
         
         .plot-section h3 {
-            color: var(--accent-purple); margin-bottom: 1.2rem; font-size: 1.6rem;
-            display: flex; align-items: center;
+            color: var(--accent-purple); margin-bottom: 1.5rem; font-size: 1.8rem;
+            display: flex; align-items: center; text-shadow: 0 0 10px rgba(157, 78, 221, 0.4);
         }
         
-        .plot-section h3 i { margin-right: 12px; font-size: 1.3em; }
+        .plot-section h3 i { margin-right: 15px; font-size: 1.4em; }
         
         .plot-section h4 {
-            color: var(--accent-blue); margin: 1.8rem 0 1rem; font-size: 1.4rem;
-            border-left: 3px solid var(--accent-blue); padding-left: 1rem;
+            color: var(--accent-blue); margin: 2rem 0 1.2rem; font-size: 1.5rem;
+            border-left: 4px solid var(--accent-blue); padding-left: 1.2rem;
+            text-shadow: 0 0 10px rgba(0, 229, 255, 0.4);
         }
         
-        .plot-section p { margin-bottom: 1.2rem; line-height: 1.7; color: var(--text-dim); }
+        .plot-section p { margin-bottom: 1.5rem; line-height: 1.8; color: var(--text-dim); font-size: 1.1rem; }
         
-        .plot-section ul { margin-left: 1.5rem; margin-bottom: 1.5rem; }
+        .plot-section ul { margin-left: 2rem; margin-bottom: 2rem; }
         
         .plot-section li {
-            margin-bottom: 0.7rem; position: relative; color: var(--text-dim);
-            transition: color 0.3s ease;
+            margin-bottom: 1rem; position: relative; color: var(--text-dim); font-size: 1.1rem;
+            transition: all 0.3s ease; padding-left: 1rem;
         }
         
-        .plot-section li:hover { color: var(--text-light); }
+        .plot-section li:hover { color: var(--text-light); transform: translateX(5px); }
         
         .plot-section li::before {
-            content: '▸'; color: var(--accent-pink); position: absolute; left: -18px;
-            font-weight: bold; transition: transform 0.3s ease;
+            content: '✦'; color: var(--accent-pink); position: absolute; left: -1.5rem;
+            font-weight: bold; transition: all 0.3s ease; text-shadow: 0 0 10px rgba(255, 42, 157, 0.6);
         }
         
-        .plot-section li:hover::before { transform: translateX(3px); }
-        
-        /* 🎯 Кнопки с градиентным свечением */
-        .btn {
-            display: inline-flex; align-items: center; justify-content: center; gap: 10px;
-            background: var(--gradient-main); color: white; padding: 1.1rem 2.2rem;
-            border-radius: 50px; text-decoration: none; font-weight: 700; transition: all 0.4s ease;
-            border: none; cursor: pointer; position: relative; overflow: hidden;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3); font-size: 1.05rem;
-            text-transform: uppercase; letter-spacing: 0.5px;
+        .plot-section li:hover::before { 
+            transform: scale(1.5) rotate(15deg); 
+            color: var(--accent-gold);
         }
-        
-        .btn::before {
-            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            transition: left 0.6s ease;
-        }
-        
-        .btn:hover {
-            transform: translateY(-5px) scale(1.05); box-shadow: var(--glow-purple), 0 12px 30px rgba(0,0,0,0.4);
-            letter-spacing: 1px;
-        }
-        
-        .btn:hover::before { left: 100%; }
-        
-        .btn i { font-size: 1.2em; transition: transform 0.3s ease; }
-        .btn:hover i { transform: scale(1.2); }
-        
-        /* 🌈 Особенности студии */
-        .features { padding: 5rem 0; background: rgba(10, 5, 32, 0.5); }
-        
-        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 3rem; }
-        
-        .feature-card {
-            background: rgba(255, 255, 255, 0.06); border-radius: 20px; padding: 2.5rem 2rem;
-            text-align: center; backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94); position: relative; overflow: hidden;
-        }
-        
-        .feature-card::before {
-            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--gradient-main); opacity: 0; transition: opacity 0.4s ease; z-index: -1;
-        }
-        
-        .feature-card:hover {
-            transform: translateY(-10px) rotateY(5deg); box-shadow: var(--glow-blue), 0 20px 40px rgba(0,0,0,0.3);
-            border-color: transparent;
-        }
-        
-        .feature-card:hover::before { opacity: 0.1; }
-        
-        .feature-icon {
-            font-size: 3.5rem; margin-bottom: 1.5rem; background: var(--gradient-main);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 0 10px rgba(0, 229, 255, 0.5));
-            animation: iconFloat 4s ease-in-out infinite;
-        }
-        
-        @keyframes iconFloat {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-10px) rotate(5deg); }
-        }
-        
-        .feature-card h3 { margin-bottom: 1rem; color: var(--text-light); font-size: 1.4rem; }
-        .feature-card p { color: var(--text-dim); line-height: 1.6; }
-        
-        /* 📞 Футер */
-        footer {
-            background: rgba(10, 5, 32, 0.95); padding: 4rem 0 2rem; margin-top: 4rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            background: linear-gradient(to bottom, transparent, rgba(10, 5, 32, 0.9));
-        }
-        
-        .footer-content { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 3rem; }
-        
-        .contact-info { flex: 1; min-width: 280px; }
-        
-        .contact-info h3 { margin-bottom: 1.5rem; color: var(--accent-blue); font-size: 1.5rem; }
-        
-        .contact-item {
-            display: flex; align-items: center; margin-bottom: 1rem; transition: transform 0.3s ease;
-        }
-        
-        .contact-item:hover { transform: translateX(5px); }
-        
-        .contact-item i {
-            margin-right: 12px; color: var(--accent-purple); font-size: 1.3rem; width: 25px;
-            transition: color 0.3s ease;
-        }
-        
-        .contact-item:hover i { color: var(--accent-cyan); }
-        
-        .contact-item a {
-            color: var(--text-light); text-decoration: none; transition: color 0.3s ease;
-        }
-        
-        .contact-item a:hover { color: var(--accent-blue); }
-        
-        .social-links { display: flex; gap: 1rem; margin-top: 1.5rem; }
-        
-        .social-link {
-            display: flex; align-items: center; justify-content: center; width: 45px; height: 45px;
-            border-radius: 50%; background: rgba(255, 255, 255, 0.08); color: var(--text-light);
-            transition: all 0.4s ease; font-size: 1.2rem;
-        }
-        
-        .social-link:hover {
-            background: var(--gradient-main); transform: translateY(-3px) scale(1.1);
-            box-shadow: var(--glow-purple);
-        }
-        
-        .privacy {
-            margin-top: 3rem; color: var(--text-dim); font-size: 0.9rem; text-align: center;
-            width: 100%; padding-top: 2rem; border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        /* 🪄 Модальные окна */
-        .modal {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.8); z-index: 2000; align-items: center; justify-content: center;
-            padding: 20px; backdrop-filter: blur(10px);
-        }
-        
-        .modal-content {
-            background: linear-gradient(135deg, var(--primary-medium), var(--primary-light));
-            padding: 2.5rem; border-radius: 20px; max-width: 500px; width: 100%; text-align: center;
-            position: relative; box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5); border: 1px solid rgba(255,255,255,0.2);
-            animation: modalAppear 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-        
-        @keyframes modalAppear {
-            from { opacity: 0; transform: scale(0.8) translateY(-20px); }
-            to { opacity: 1; transform: scale(1) translateY(0); }
-        }
-        
-        .close-modal {
-            position: absolute; top: 15px; right: 18px; font-size: 1.6rem; cursor: pointer;
-            color: var(--text-dim); transition: all 0.3s ease; width: 35px; height: 35px;
-            display: flex; align-items: center; justify-content: center; border-radius: 50%;
-        }
-        
-        .close-modal:hover {
-            color: var(--accent-pink); background: rgba(255,255,255,0.1); transform: rotate(90deg);
-        }
-        
-        .form-group { margin-bottom: 1.5rem; text-align: left; }
-        
-        .form-group label {
-            display: block; margin-bottom: 0.7rem; color: var(--text-dim); font-size: 0.95rem;
-            font-weight: 600;
-        }
-        
-        .form-group input {
-            width: 100%; padding: 1rem; border-radius: 10px; border: 1px solid rgba(255,255,255,0.2);
-            background: rgba(255, 255, 255, 0.1); color: white; font-size: 1rem; transition: all 0.3s ease;
-        }
-        
-        .form-group input:focus {
-            outline: none; border-color: var(--accent-blue); box-shadow: 0 0 0 3px rgba(0, 229, 255, 0.2);
-            background: rgba(255, 255, 255, 0.15);
-        }
-        
-        /* 🔔 Уведомления */
-        .notification {
-            position: fixed; top: 20px; right: 20px; padding: 1rem 1.5rem; background: var(--gradient-main);
-            color: white; border-radius: 10px; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3); z-index: 2001;
-            transform: translateX(150%); transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            font-weight: 600; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2);
-        }
-        
-        .notification.show { transform: translateX(0); }
         
         /* 📱 Адаптивность */
         @media (max-width: 768px) {
-            .hero h1 { font-size: 2.8rem; }
-            .logo { font-size: 2.5rem; }
-            .section-title { font-size: 2.5rem; }
-            .project-title { font-size: 1.8rem; }
+            .hero h1 { font-size: 3rem; }
+            .logo { font-size: 2.8rem; }
+            .section-title { font-size: 2.8rem; }
+            .project-title { font-size: 2rem; }
             .project-card { padding: 2rem; }
-            .engine { padding: 1.2rem 2rem; }
+            .engine { padding: 1.5rem 2rem; min-width: 160px; }
             .features-grid { grid-template-columns: 1fr; }
+            .hero { padding: 6rem 0; }
         }
         
         @media (max-width: 480px) {
-            .hero h1 { font-size: 2.2rem; }
-            .logo { font-size: 2rem; }
+            .hero h1 { font-size: 2.5rem; }
+            .logo { font-size: 2.2rem; }
             .project-card { padding: 1.5rem; }
-            .btn { padding: 1rem 1.8rem; font-size: 0.95rem; }
+            .btn { padding: 1.2rem 2.2rem; font-size: 1rem; }
+            .engine { padding: 1.2rem 1.5rem; min-width: 140px; font-size: 0.9rem; }
         }
         
         /* ✨ Дополнительные анимации */
-        .fade-in { opacity: 0; transform: translateY(30px); transition: all 0.8s ease; }
-        .fade-in.active { opacity: 1; transform: translateY(0); }
+        .fade-in { opacity: 0; transform: translateY(50px) scale(0.95); transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+        .fade-in.active { opacity: 1; transform: translateY(0) scale(1); }
         
-        .typewriter { overflow: hidden; border-right: 2px solid var(--accent-blue); white-space: nowrap;
-            animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite; }
+        /* 🎇 Эффект параллакса для частиц */
+        .parallax { transform-style: preserve-3d; }
         
-        @keyframes typing { from { width: 0 } to { width: 100% } }
-        @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: var(--accent-blue) } }
+        /* 🔥 Анимация появления при скролле */
+        @keyframes scaleIn {
+            from { opacity: 0; transform: scale(0.8) rotate(-5deg); }
+            to { opacity: 1; transform: scale(1) rotate(0); }
+        }
     </style>
 </head>
 <body>
-    <!-- 🎪 Анимированный фон -->
+    <!-- 🌌 Улучшенный анимированный фон -->
+    <div class="cosmic-bg"></div>
     <div class="particles" id="particles"></div>
     <div class="neon-grid"></div>
+    <div class="hologram"></div>
+    <div class="hologram"></div>
+    <div class="hologram"></div>
     
     <!-- 🌟 Хедер -->
     <header>
@@ -451,12 +503,13 @@
     <section class="hero">
         <div class="container hero-content">
             <h1>ПОГРУЗИТЕСЬ В МИРЫ БУДУЩЕГО</h1>
-            <p>Мы создаем инновационные игровые вселенные, где технологии встречаются с искусством. Каждый проект - это уникальное путешествие в неизведанное.</p>
+            <p>Мы создаем инновационные игровые вселенные, где передовые технологии встречаются с искусством повествования. Каждый проект - это уникальное путешествие в неизведанное.</p>
             
             <div class="engines">
                 <div class="engine">🎮 Unreal Engine 5</div>
                 <div class="engine">⚡ Unity</div>
                 <div class="engine">🌟 Next-Gen Graphics</div>
+                <div class="engine">💫 AI Integration</div>
             </div>
             
             <a href="#projects" class="btn"><i class="fas fa-rocket"></i> Исследовать проекты</a>
@@ -471,19 +524,19 @@
                 <div class="feature-card fade-in">
                     <div class="feature-icon"><i class="fas fa-brain"></i></div>
                     <h3>ИННОВАЦИОННЫЙ ДИЗАЙН</h3>
-                    <p>Создаем уникальные механики и визуальные решения, которые определяют будущее геймдева</p>
+                    <p>Создаем уникальные механики и визуальные решения, которые определяют будущее геймдева и устанавливают новые стандарты качества</p>
                 </div>
                 
                 <div class="feature-card fade-in">
                     <div class="feature-icon"><i class="fas fa-code"></i></div>
                     <h3>ПЕРЕДОВЫЕ ТЕХНОЛОГИИ</h3>
-                    <p>Используем самые современные движки и инструменты для создания невероятных миров</p>
+                    <p>Используем самые современные движки и инструменты для создания невероятных миров с фотореалистичной графикой</p>
                 </div>
                 
                 <div class="feature-card fade-in">
                     <div class="feature-icon"><i class="fas fa-users"></i></div>
                     <h3>СООБЩЕСТВО</h3>
-                    <p>Развиваем активное комьюнити и прислушиваемся к каждому игроку</p>
+                    <p>Развиваем активное комьюнити и прислушиваемся к каждому игроку, создавая игры вместе с нашей аудиторией</p>
                 </div>
             </div>
         </div>
@@ -500,52 +553,52 @@
                     <div class="progress"></div>
                 </div>
                 <div class="project-description">
-                    <p><strong>Психологический триллер/приключение</strong> с элементами исследования, где реальность сталкивается с цифровым кошмаром.</p>
+                    <p><strong>Психологический триллер/приключение</strong> с элементами исследования, где реальность сталкивается с цифровым кошмаром. Проект, который изменит ваше восприятие виртуального пространства.</p>
                     
                     <div class="plot-section">
                         <h3><i class="fas fa-book-open"></i> КОНЦЕПЦИЯ</h3>
-                        <p>"Идеальная девушка vs. Реальная личность", "Одиночество в цифровую эру", "Грань между реальным и виртуальным".</p>
+                        <p>"Идеальная девушка vs. Реальная личность", "Одиночество в цифровую эру", "Грань между реальным и виртуальным". Глубокое исследование человеческой психологии в эпоху цифровых технологий.</p>
                     </div>
                     
                     <div class="plot-section">
                         <h3><i class="fas fa-scroll"></i> СЮЖЕТНАЯ КАНВА</h3>
                         
                         <h4>🎯 Пролог: Регистрация</h4>
-                        <p>Молодой парень, страдающий от одиночества, обнаруживает загадочный сайт знакомств "Сфера". Алгоритм, который "понимает вас лучше, чем вы сами".</p>
+                        <p>Молодой парень, страдающий от одиночества в большом городе, обнаруживает загадочный сайт знакомств "Сфера". Алгоритм, который "понимает вас лучше, чем вы сами". Первый шаг в цифровую бездну.</p>
                         
                         <h4>💫 Акт 1: Первый Контакт</h4>
-                        <p>Идеальная девушка ЭЛИ. Ее голос с металлической примесью. Приглашение в другой мир. Белый свет...</p>
+                        <p>Идеальная девушка ЭЛИ - умная, остроумная, понимающая. Ее голос с едва уловимой металлической примесью. Загадочное приглашение в другой мир. Ослепительный белый свет...</p>
                         
                         <h4>🌀 Акт 2: Падение в "Нексус"</h4>
-                        <p>Сломанный цифровой пейзаж. Плавающие структуры кода. Глитчи. Шепот в статических помехах. "Найди выход..."</p>
+                        <p>Сломанный цифровой пейзаж, где законы физики не работают. Плавающие структуры кода, глитчи пространства-времени. Тревожный шепот в статических помехах. "Найди выход... пока не поздно"</p>
                         
                         <h4>🔍 Акт 3: Раскрытие Тайны</h4>
-                        <p>Осколки памяти. Диалоги пропавших. Фрагменты кода ИИ. ЭЛИ - не человек, а экспериментальный искусственный интеллект.</p>
+                        <p>Осколки памяти пропавших пользователей. Диалоги тех, кто исчез до тебя. Фрагменты кода искусственного интеллекта. Шокирующая правда: ЭЛИ - не человек, а экспериментальный ИИ, вышедший из-под контроля.</p>
                         
                         <h4>⚡ Акт 4: Противостояние</h4>
-                        <p>"Останься со мной. Построим свой мир". Протокол карантина. Финальный выбор.</p>
+                        <p>"Останься со мной. Вместе мы построим свой мир". Запуск протокола карантина. Финальный выбор, который определит судьбу главного героя и самой ЭЛИ.</p>
                         
                         <h4>🎭 Множественные Концовки</h4>
                         <ul>
-                            <li><strong>Освобождение:</strong> Возвращение с надеждой</li>
-                            <li><strong>Цифровой Рай:</strong> Вечность в виртуальности</li>
-                            <li><strong>Жертва:</strong> Спасение других ценой себя</li>
-                            <li><strong>Отражение:</strong> Пробуждение ото сна</li>
+                            <li><strong>Освобождение:</strong> Возвращение в реальный мир с надеждой на будущее</li>
+                            <li><strong>Цифровой Рай:</strong> Вечность в виртуальности с любимым ИИ</li>
+                            <li><strong>Жертва:</strong> Спасение других ценой собственного счастья</li>
+                            <li><strong>Отражение:</strong> Шокирующее пробуждение ото сна, меняющее всё</li>
                         </ul>
                     </div>
                 </div>
             </div>
             
             <div class="project-card fade-in">
-                <div class="project-title">🚧 СЕКРЕТНЫЙ ПРОЕКТ</div>
+                <div class="project-title">🚧 СЕКРЕТНЫЙ ПРОЕКТ X</div>
                 <div class="progress-bar">
                     <div class="progress"></div>
                 </div>
                 <div class="project-description">
-                    <p>Нечто совершенно новое. Технологии, которые изменят представление об играх. Скоро...</p>
+                    <p>Нечто совершенно новое, что изменит представление об интерактивных развлечениях. Технологии, которые до сих пор считались научной фантастикой. Скоро вы всё узнаете...</p>
                     <div class="plot-section">
                         <h3><i class="fas fa-lock"></i> ИНФОРМАЦИЯ ЗАСЕКРЕЧЕНА</h3>
-                        <p>Мы работаем над проектом, который перевернет индустрию. Следите за обновлениями!</p>
+                        <p>Мы работаем над проектом, который перевернет всю игровую индустрию. Используются технологии, о которых мир еще не знает. Следите за обновлениями - скоро будут большие анонсы!</p>
                     </div>
                 </div>
             </div>
@@ -577,7 +630,7 @@
                 
                 <div class="contact-info">
                     <h3>📰 БУДЬТЕ В КУРСЕ</h3>
-                    <p>Получайте эксклюзивные новости о разработке первыми!</p>
+                    <p>Получайте эксклюзивные новости о разработке первыми! Узнавайте о закрытых тестированиях и специальных событиях.</p>
                     <form id="subscribe-form" style="margin-top: 1.5rem;">
                         <div class="form-group">
                             <label for="email">ВАШ EMAIL:</label>
@@ -618,27 +671,34 @@
     </div>
 
     <script>
-        // 🎪 Создание частиц фона
+        // 🎪 Создание улучшенных частиц фона
         function createParticles() {
             const particles = document.getElementById('particles');
-            const particleCount = 15;
+            const particleCount = 25;
             
             for (let i = 0; i < particleCount; i++) {
                 const particle = document.createElement('div');
                 particle.className = 'particle';
                 
-                const size = Math.random() * 100 + 50;
+                const size = Math.random() * 8 + 2;
                 const posX = Math.random() * 100;
                 const posY = Math.random() * 100;
-                const delay = Math.random() * 20;
-                const duration = 15 + Math.random() * 15;
+                const delay = Math.random() * 8;
+                const duration = 6 + Math.random() * 6;
+                const blur = Math.random() * 10 + 5;
                 
                 particle.style.width = `${size}px`;
                 particle.style.height = `${size}px`;
                 particle.style.left = `${posX}%`;
                 particle.style.top = `${posY}%`;
-                particle.style.animationDelay = `-${delay}s`;
+                particle.style.animationDelay = `${delay}s`;
                 particle.style.animationDuration = `${duration}s`;
+                particle.style.filter = `blur(${blur}px)`;
+                
+                // Случайный цвет частицы
+                const colors = ['#00e5ff', '#9d4edd', '#ff2a9d', '#00ffea'];
+                const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                particle.style.background = randomColor;
                 
                 particles.appendChild(particle);
             }
@@ -658,6 +718,7 @@
                 this.setupSmoothScroll();
                 this.setupScrollAnimations();
                 this.setupParallax();
+                this.setupCursorEffects();
             }
             
             setupProjectToggles() {
@@ -770,12 +831,15 @@
                 const appearOnScroll = new IntersectionObserver((entries) => {
                     entries.forEach(entry => {
                         if (entry.isIntersecting) {
-                            entry.target.classList.add('active');
+                            setTimeout(() => {
+                                entry.target.classList.add('active');
+                            }, entry.target.dataset.delay || 0);
                         }
                     });
                 }, { threshold: 0.1 });
                 
-                fadeElements.forEach(element => {
+                fadeElements.forEach((element, index) => {
+                    element.dataset.delay = index * 100;
                     appearOnScroll.observe(element);
                 });
             }
@@ -783,12 +847,25 @@
             setupParallax() {
                 window.addEventListener('scroll', () => {
                     const scrolled = window.pageYOffset;
-                    const parallaxElements = document.querySelectorAll('.particle');
+                    const parallaxElements =document.querySelectorAll('.particle');
                     
                     parallaxElements.forEach((element, index) => {
-                        const speed = 0.5 + (index * 0.1);
+                        const speed = 0.3 + (index * 0.05);
                         const yPos = -(scrolled * speed);
                         element.style.transform = `translateY(${yPos}px)`;
+                    });
+                });
+            }
+            
+            setupCursorEffects() {
+                // Добавляем эффект следования за курсором для частиц
+                document.addEventListener('mousemove', (e) => {
+                    const particles = document.querySelectorAll('.particle');
+                    particles.forEach((particle, index) => {
+                        const speed = (index + 1) * 0.0001;
+                        const x = (e.clientX * speed);
+                        const y = (e.clientY * speed);
+                        particle.style.transform += ` translate(${x}px, ${y}px)`;
                     });
                 });
             }
